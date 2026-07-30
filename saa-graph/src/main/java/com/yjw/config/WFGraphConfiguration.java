@@ -13,13 +13,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
 
 import static com.alibaba.cloud.ai.graph.action.AsyncNodeAction.node_async;
 
 
-@Configurable
+@Configuration
 public class WFGraphConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(WFGraphConfiguration.class);
