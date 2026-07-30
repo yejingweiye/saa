@@ -43,6 +43,7 @@
     <modules>
 
         <module>saa-graph</module>
+        <module>saa-human-graph</module>
     </modules>
 
     <dependencyManagement>
