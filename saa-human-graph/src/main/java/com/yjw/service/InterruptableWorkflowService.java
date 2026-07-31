@@ -26,15 +26,19 @@ public class InterruptableWorkflowService {
 
     private final CompiledGraph orderApprovalCompiledGraph;
     private final CompiledGraph sensitiveOperationCompiledGraph;
+    private final SaverConfig saverConfig;
 
     public InterruptableWorkflowService(
             @Qualifier("orderApprovalGraph") StateGraph orderApprovalGraph,
-            @Qualifier("sensitiveOperationGraph") StateGraph sensitiveOperationGraph)
+            @Qualifier("sensitiveOperationGraph") StateGraph sensitiveOperationGraph,
+            @Qualifier("saverConfig") SaverConfig saverConfig)
             throws GraphStateException {
 
-        SaverConfig saverConfig = SaverConfig.builder()
-                .register(new MemorySaver())
-                .build();
+        this.saverConfig = saverConfig;
+
+//        SaverConfig saverConfig = SaverConfig.builder()
+//                .register(new MemorySaver())
+//                .build();
 
         this.orderApprovalCompiledGraph = orderApprovalGraph.compile(
                 CompileConfig.builder()
