@@ -27,6 +27,7 @@ public class SensitiveOperationNode implements AsyncNodeActionWithConfig, Interr
             "export_sensitive_data"
     );
 
+    // SensitiveOperationNode 写入 status / result / error / executed_time
     @Override
     public CompletableFuture<Map<String, Object>> apply(OverAllState state, RunnableConfig config) {
         logger.info("SensitiveOperationNode.apply() executing");

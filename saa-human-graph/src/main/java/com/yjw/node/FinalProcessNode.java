@@ -16,6 +16,16 @@ public class FinalProcessNode implements AsyncNodeActionWithConfig {
     private static final Logger logger = LoggerFactory.getLogger(FinalProcessNode.class);
 
 
+    /* 1.订单流程数据
+        OrderApprovalNode 写入 order_status / message / processed_time
+        订单 FinalProcessNode 写入 workflow_status / order_final_status / completed_time / summary
+     */
+
+    /* 2.敏感操作数据
+        SensitiveOperationNode 写入 status / result / error / executed_time
+        敏感 FinalProcessNode 写入 workflow_status / operation_final_status / completed_time / summary
+     */
+
     @Override
     public CompletableFuture<Map<String, Object>> apply(OverAllState state, RunnableConfig config) {
         logger.info("FinalProcessNode.apply() executing");

@@ -21,6 +21,7 @@ public class OrderApprovalNode implements AsyncNodeActionWithConfig, Interruptab
     private static final double APPROVAL_THRESHOLD = 10000.0;
 
 
+    // OrderApprovalNode 写入 order_status / message / processed_time
     @Override
     public CompletableFuture<Map<String, Object>> apply(OverAllState state, RunnableConfig config) {
         logger.info("OrderApprovalNode.apply() executing");
