@@ -1,0 +1,37 @@
+server:
+  port: 8094  #端口
+  tomcat:
+    uri-encoding: UTF-8   #服务编码
+spring:
+  profiles:
+    active: local
+  application:
+    name: aigc-service
+  main:
+    allow-circular-references: true # 允许循环引用
+tj:
+  swagger:
+    enable: true
+    package-path: com.tianji.aigc.controller
+    title: AIGC接口文档
+    description: 该服务包含AI相关功能
+    contact-name: AI智能体
+    contact-url: http://www.xxx.cn/
+    contact-email: dfgdfg@qq.com
+    version: v1.0
+    enableResponseWrap: true
+  auth:
+    resource:
+      enable: true
+  jdbc:
+    database: tj_aigc #指定使用的数据库名
+  ai:
+    prompt:
+      system:
+        chat:
+          data-id: system-chat-message.txt # 系统提示词，具体内容在nacos上
+          group: DEFAULT_GROUP
+          timeout-ms: 20000
+    memory:
+      max: 100 #存储最大的聊天记录数
+      type: Redis #Redis/MYSQL/MongoDB
