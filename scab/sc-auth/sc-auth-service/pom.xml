@@ -5,18 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.yjw</groupId>
-        <artifactId>scab</artifactId>
+        <artifactId>sc-auth</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>sc-auth</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>sc-auth-common</module>
-        <module>sc-auth-resource-sdk</module>
-        <module>sc-auth-gateway-sdk</module>
-        <module>sc-auth-service</module>
-    </modules>
+    <artifactId>sc-auth-service</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

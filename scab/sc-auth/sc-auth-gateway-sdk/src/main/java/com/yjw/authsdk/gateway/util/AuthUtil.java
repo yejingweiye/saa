@@ -31,16 +31,19 @@ import static com.yjw.auth.common.constants.JwtConstants.*;
 
 @Slf4j
 public class AuthUtil {
-    // 缓存权限信息
+    // 定时器redis缓存权限信息，key=接口ant匹配路径，value=接口所需角色权限
     private Map<String, PrivilegeRoleDTO> privileges = new HashMap<>();
-    // 要拦截的路径匹配符的集合
+    // 定时器redis获取，要拦截的路径匹配符的集合
     private Set<String> paths = new HashSet<>();
     // 权限版本信息，减少不必要的缓存处理
     private int privilegeVersion;
 
+    // ant路径匹配工具类，支持 /** /user/** 通配符匹配URL
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
+    // JWT验签器持有者，提供公钥校验token
     private final JwtSignerHolder jwtSignerHolder;
     private final StringRedisTemplate stringRedisTemplate;
+    // Redis Hash操作对象，存放所有接口权限数据，key常量：AUTH_PRIVILEGE_KEY
     private final BoundHashOperations<String, String, String> hashOps;
 
     public AuthUtil(JwtSignerHolder jwtSignerHolder, StringRedisTemplate stringRedisTemplate) {
@@ -106,7 +109,7 @@ public class AuthUtil {
         // 3.获取当前路径所需权限
         PrivilegeRoleDTO pathPrivilege = findPathPrivilege(matchPath);
 
-        // 4.权限判断
+        // 4.这是redis的权限判断
         Set<Long> requiredRoles = pathPrivilege.getRoles();
         if (!CollectionUtil.contains(requiredRoles, r.getData().getRoleId())) {
             // 没有访问权限
@@ -150,7 +153,7 @@ public class AuthUtil {
 
     @Scheduled(fixedDelay = 20000)
     public void refreshTask(){
-        // 1.获取版本号
+        // 1.获取redis里版本号
         int currentVersion = currentVersion();
         if (currentVersion == this.privilegeVersion) {
             // 版本一致，说明数据没有更新，直接结束任务

@@ -1,13 +1,13 @@
 package com.yjw.common.domain;
 
-import com.tianji.common.constants.Constant;
+import com.yjw.common.constants.Constant;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.slf4j.MDC;
 
-import static com.tianji.common.constants.ErrorInfo.Code.FAILED;
-import static com.tianji.common.constants.ErrorInfo.Code.SUCCESS;
-import static com.tianji.common.constants.ErrorInfo.Msg.OK;
+import static com.yjw.common.constants.ErrorInfo.Code.FAILED;
+import static com.yjw.common.constants.ErrorInfo.Code.SUCCESS;
+import static com.yjw.common.constants.ErrorInfo.Msg.OK;
 
 @Data
 @Schema(description = "通用响应结果")
