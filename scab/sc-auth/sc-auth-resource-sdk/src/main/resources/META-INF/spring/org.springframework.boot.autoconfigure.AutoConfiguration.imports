@@ -1,0 +1,2 @@
+com.yjw.authsdk.resource.config.ResourceInterceptorConfiguration
+com.yjw.authsdk.resource.config.FeignRelayUserAutoConfiguration

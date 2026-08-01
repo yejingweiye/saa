@@ -1,10 +1,10 @@
 package com.yjw.common.autoconfigure.mvc;
 
 
-import com.tianji.common.autoconfigure.mvc.advice.CommonExceptionAdvice;
-import com.tianji.common.autoconfigure.mvc.advice.WrapperResponseBodyAdvice;
-import com.tianji.common.autoconfigure.mvc.converter.WrapperResponseMessageConverter;
-import com.tianji.common.filters.RequestIdFilter;
+import com.yjw.common.autoconfigure.mvc.advice.CommonExceptionAdvice;
+import com.yjw.common.autoconfigure.mvc.advice.WrapperResponseBodyAdvice;
+import com.yjw.common.autoconfigure.mvc.converter.WrapperResponseMessageConverter;
+import com.yjw.common.filters.RequestIdFilter;
 import jakarta.servlet.Filter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;

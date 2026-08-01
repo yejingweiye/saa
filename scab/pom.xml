@@ -9,6 +9,7 @@
     <version>1.0.0</version>
     <modules>
         <module>sc-common</module>
+        <module>sc-auth</module>
     </modules>
     <packaging>pom</packaging>
 

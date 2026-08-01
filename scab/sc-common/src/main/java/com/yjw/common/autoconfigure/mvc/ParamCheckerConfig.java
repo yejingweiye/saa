@@ -1,6 +1,6 @@
 package com.yjw.common.autoconfigure.mvc;
 
-import com.tianji.common.autoconfigure.mvc.aspects.CheckerAspect;
+import com.yjw.common.autoconfigure.mvc.aspects.CheckerAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

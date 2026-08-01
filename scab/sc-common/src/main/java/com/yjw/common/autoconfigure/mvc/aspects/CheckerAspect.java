@@ -1,9 +1,9 @@
 package com.yjw.common.autoconfigure.mvc.aspects;
 
-import com.tianji.common.utils.ArrayUtils;
-import com.tianji.common.utils.CollUtils;
-import com.tianji.common.validate.Checker;
-import com.tianji.common.validate.annotations.ParamChecker;
+import com.yjw.common.utils.ArrayUtils;
+import com.yjw.common.utils.CollUtils;
+import com.yjw.common.validate.Checker;
+import com.yjw.common.validate.annotations.ParamChecker;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
