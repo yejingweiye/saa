@@ -5,22 +5,32 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.yjw</groupId>
-        <artifactId>scab</artifactId>
+        <artifactId>sc-auth</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>sc-auth</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>sc-auth-common</module>
-        <module>sc-auth-resource-sdk</module>
-        <module>sc-auth-gateway-sdk</module>
-    </modules>
+    <artifactId>sc-auth-gateway-sdk</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.yjw</groupId>
+            <artifactId>sc-auth-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-commons</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
