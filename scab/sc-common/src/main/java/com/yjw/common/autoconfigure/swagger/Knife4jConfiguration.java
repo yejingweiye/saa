@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(prefix = "tj.swagger", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "sc.swagger", name = "enable", havingValue = "true")
 @EnableConfigurationProperties(SwaggerConfigProperties.class)
 public class Knife4jConfiguration {
 
@@ -19,7 +19,7 @@ public class Knife4jConfiguration {
     private SwaggerConfigProperties swaggerConfigProperties;
 
     @Bean
-    @ConditionalOnProperty(name = "tj.swagger.enable", havingValue = "true")
+    @ConditionalOnProperty(name = "sc.swagger.enable", havingValue = "true")
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
@@ -59,13 +59,13 @@ public class Knife4jConfiguration {
     // }
     // @Bean
     // @Primary
-    // @ConditionalOnProperty(prefix = "tj.swagger", name = "enableResponseWrap",havingValue = "true")
+    // @ConditionalOnProperty(prefix = "sc.swagger", name = "enableResponseWrap",havingValue = "true")
     // public BaseSwaggerResponseModelPlugin baseSwaggerResponseModelPlugin(){
     //     return new BaseSwaggerResponseModelPlugin();
     // }
     // @Bean
     // @Primary
-    // @ConditionalOnProperty(prefix = "tj.swagger", name = "enableResponseWrap",havingValue = "true")
+    // @ConditionalOnProperty(prefix = "sc.swagger", name = "enableResponseWrap",havingValue = "true")
     // public BaseSwaggerResponseBuilderPlugin baseSwaggerResponseBuilderPlugin(){
     //     return new BaseSwaggerResponseBuilderPlugin();
     // }

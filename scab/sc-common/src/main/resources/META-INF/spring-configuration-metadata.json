@@ -1,7 +1,7 @@
 {
   "groups": [
     {
-      "name": "tj.swagger",
+      "name": "sc.swagger",
       "type": "com.yjw.common.autoconfigure.swagger.Knife4jConfiguration",
       "sourceType": "com.yjw.common.autoconfigure.swagger.SwaggerConfigProperties"
     },
@@ -22,63 +22,63 @@
   ],
   "properties": [
     {
-      "name": "tj.swagger.enable",
+      "name": "sc.swagger.enable",
       "type": "java.lang.Boolean",
       "description": "是否开启swagger功能，默认false",
       "sourceType": "com.yjw.common.autoconfigure.swagger.SwaggerConfigProperties",
       "defaultValue": false
     },
     {
-      "name": "tj.swagger.enableResponseWrap",
+      "name": "sc.swagger.enableResponseWrap",
       "type": "java.lang.Boolean",
       "description": "是否开启响应结果包装功能，默认false",
       "sourceType": "com.yjw.common.autoconfigure.swagger.SwaggerConfigProperties",
       "defaultValue": false
     },
     {
-      "name": "tj.swagger.packagePath",
+      "name": "sc.swagger.packagePath",
       "type": "java.lang.String",
       "description": "API接口扫描包",
       "sourceType": "com.yjw.common.autoconfigure.swagger.SwaggerConfigProperties",
       "defaultValue": ""
     },
     {
-      "name": "tj.swagger.title",
+      "name": "sc.swagger.title",
       "type": "java.lang.String",
       "description": "API文档标题",
       "sourceType": "com.yjw.common.autoconfigure.swagger.SwaggerConfigProperties",
       "defaultValue": ""
     },
     {
-      "name": "tj.swagger.description",
+      "name": "sc.swagger.description",
       "type": "java.lang.String",
       "description": "文档描述",
       "sourceType": "com.yjw.common.autoconfigure.swagger.SwaggerConfigProperties",
       "defaultValue": ""
     },
     {
-      "name": "tj.swagger.contactName",
+      "name": "sc.swagger.contactName",
       "type": "java.lang.String",
       "description": "联系人姓名",
       "sourceType": "com.yjw.common.autoconfigure.swagger.SwaggerConfigProperties",
       "defaultValue": ""
     },
     {
-      "name": "tj.swagger.contactUrl",
+      "name": "sc.swagger.contactUrl",
       "type": "java.lang.String",
       "description": "联系人主页地址",
       "sourceType": "com.yjw.common.autoconfigure.swagger.SwaggerConfigProperties",
       "defaultValue": ""
     },
     {
-      "name": "tj.swagger.contactEmail",
+      "name": "sc.swagger.contactEmail",
       "type": "java.lang.String",
       "description": "联系人邮箱",
       "sourceType": "com.yjw.common.autoconfigure.swagger.SwaggerConfigProperties",
       "defaultValue": ""
     },
     {
-      "name": "tj.swagger.version",
+      "name": "sc.swagger.version",
       "type": "java.lang.String",
       "description": "版本",
       "sourceType": "com.yjw.common.autoconfigure.swagger.SwaggerConfigProperties",

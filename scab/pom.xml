@@ -10,6 +10,7 @@
     <modules>
         <module>sc-common</module>
         <module>sc-auth</module>
+        <module>sc-api</module>
     </modules>
     <packaging>pom</packaging>
 
