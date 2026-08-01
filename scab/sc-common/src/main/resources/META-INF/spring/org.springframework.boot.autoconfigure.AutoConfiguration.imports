@@ -1,0 +1,8 @@
+com.yjw.common.autoconfigure.mq.MqConfig
+com.yjw.common.autoconfigure.mvc.JsonConfig
+com.yjw.common.autoconfigure.mvc.MvcConfig
+com.yjw.common.autoconfigure.mvc.ParamCheckerConfig
+com.yjw.common.autoconfigure.mybatis.MybatisConfig
+com.yjw.common.autoconfigure.redisson.RedissonConfig
+com.yjw.common.autoconfigure.swagger.Knife4jConfiguration
+com.yjw.common.autoconfigure.xxljob.XxlJobConfig
