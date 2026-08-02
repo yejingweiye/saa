@@ -3,7 +3,9 @@ package com.yjw.common.domain.dto;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.yjw.common.utils.BeanUtils;
+import com.yjw.common.utils.CollUtils;
+import com.yjw.common.utils.Convert;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +14,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 
 @Data
 @NoArgsConstructor

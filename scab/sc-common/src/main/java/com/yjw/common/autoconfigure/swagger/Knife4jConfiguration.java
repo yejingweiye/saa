@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty(prefix = "sc.swagger", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "tj.swagger", name = "enable", havingValue = "true")
 @EnableConfigurationProperties(SwaggerConfigProperties.class)
 public class Knife4jConfiguration {
 

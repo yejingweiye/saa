@@ -29,6 +29,19 @@ public class PrivilegeCache {
         this.hashOps = stringRedisTemplate.boundHashOps(AUTH_PRIVILEGE_KEY);
     }
 
+    /**
+     * redis 数据
+     * key: auth:privileges
+     * value: Map<String, String>
+     * 1557007726217863170
+     * {
+     * 	"id": 1557007726217863170,
+     * 	"antPath": "POST:/teachers",
+     * 	"internal": false,
+     * 	"roles": [1]
+     * }
+     *
+     */
     public void initPrivilegesCache(List<PrivilegeRoleDTO> list) {
         // 1.组装权限对应角色
         Map<String, String> map = new HashMap<>();

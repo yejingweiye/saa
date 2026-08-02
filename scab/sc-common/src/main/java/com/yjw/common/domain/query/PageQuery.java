@@ -2,8 +2,8 @@ package com.yjw.common.domain.query;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.tianji.common.constants.Constant;
-import com.tianji.common.utils.StringUtils;
+import com.yjw.common.constants.Constant;
+import com.yjw.common.utils.StringUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import lombok.Data;

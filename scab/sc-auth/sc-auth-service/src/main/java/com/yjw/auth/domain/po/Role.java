@@ -1,5 +1,6 @@
 package com.yjw.auth.domain.po;
 
+import com.baomidou.mybatisplus.annotation.*;
 import com.yjw.api.dto.auth.RoleDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

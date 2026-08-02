@@ -166,6 +166,7 @@ public class AuthUtil {
             // 版本一致，说明数据没有更新，直接结束任务
             return;
         }
+        log.info("privilegeVersion={},开始刷新权限信息",this.privilegeVersion);
         // 2.获取最新权限信息
         List<PrivilegeRoleDTO> privilegeRoleDTOS = loadPrivileges();
         if(CollUtil.isEmpty(privilegeRoleDTOS)){

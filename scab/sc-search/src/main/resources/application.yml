@@ -7,7 +7,7 @@ spring:
     active: local
   application:
     name: search-service
-tj:
+sc:
   swagger:
     enable: true
     package-path: com.yjw.search.controller

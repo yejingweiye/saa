@@ -85,6 +85,7 @@ public class JwtSignerHolder {
                         continue;
                     }
                     ServiceInstance instance = instances.get(0);
+                    // http://127.0.0.1:8081/jwks
                     String jwkUri = String.format("http://%s:%d/jwks", instance.getHost(), instance.getPort());
                     log.info("加载auth服务地址成功，{}", jwkUri);
 

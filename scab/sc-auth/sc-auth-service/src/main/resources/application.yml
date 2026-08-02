@@ -13,7 +13,7 @@ encrypt:
     location: classpath:scba.jks  #KeyStore 证书库名称
     password: ${JKS_STORE_PWD:sc123321}   #证书库密码
     secret: ${JKS_KEY_PWD:sc123321}   #秘钥
-sc:
+tj:
   swagger:
     enable: true
     enableResponseWrap: true
