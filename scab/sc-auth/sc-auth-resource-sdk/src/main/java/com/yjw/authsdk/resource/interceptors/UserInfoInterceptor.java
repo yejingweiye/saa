@@ -6,6 +6,12 @@ import com.yjw.common.utils.UserContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+/**
+ * 永不阻断。只读 USER_HEADER 存 ThreadLocal,没 header 就直接放行
+ * 存userID：UserContext
+ * 存token：TokenContext
+ *
+ */
 @Slf4j
 public class UserInfoInterceptor implements HandlerInterceptor {
 

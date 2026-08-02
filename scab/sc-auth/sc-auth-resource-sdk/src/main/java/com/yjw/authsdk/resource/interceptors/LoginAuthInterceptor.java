@@ -5,6 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 
+/**
+    * 登录拦截器
+    * 1.尝试获取用户信息
+    * 2.判断是否登录
+    * 3.登录则放行，未登录则返回401
+    */
 @Slf4j
 public class LoginAuthInterceptor implements HandlerInterceptor {
 

@@ -29,6 +29,13 @@ import static com.yjw.auth.common.constants.AuthErrorInfo.Code.INVALID_TOKEN_COD
 import static com.yjw.auth.common.constants.AuthErrorInfo.Msg.*;
 import static com.yjw.auth.common.constants.JwtConstants.*;
 
+/**
+ * sc-auth-service 加载权限信息到 redis，网关层从 redis 获取权限信息，进行权限校验
+ * 1.网关层从 redis 获取权限信息，定时器刷新权限信息
+ * 2.网关层拦截请求，获取请求路径，匹配权限
+ * 3.网关层获取请求头 token，解析 token 获取用户信息
+ * 4.网关层判断用户角色是否有权限访问该接口
+ */
 @Slf4j
 public class AuthUtil {
     // 定时器redis缓存权限信息，key=接口ant匹配路径，value=接口所需角色权限
