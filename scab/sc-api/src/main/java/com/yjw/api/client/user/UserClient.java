@@ -6,6 +6,7 @@ import com.yjw.api.dto.user.LoginFormDTO;
 import com.yjw.api.dto.user.UserDTO;
 import com.yjw.common.domain.dto.LoginUserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
