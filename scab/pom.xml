@@ -11,6 +11,7 @@
         <module>sc-common</module>
         <module>sc-auth</module>
         <module>sc-api</module>
+        <module>sc-gateway</module>
     </modules>
     <packaging>pom</packaging>
 
