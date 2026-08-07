@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.yjw</groupId>
-    <artifactId>saa</artifactId>
+    <artifactId>saa-example</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <description>Spring AI Alibaba Examples</description>
-    <name>saa</name>
-    <url>https://xxx.com</url>
+    <description>example</description>
+    <name>example</name>
+    <url>https://xxx.examples</url>
 
     <properties>
         <!-- Project revision -->
@@ -41,11 +42,9 @@
     </properties>
 
     <modules>
+        <module>helloworld</module>
+        <module>prompt</module>
 
-        <module>saa-graph</module>
-        <module>saa-human-graph</module>
-        <module>scab</module>
-        <module>saa-exmple</module>
     </modules>
 
     <dependencyManagement>
