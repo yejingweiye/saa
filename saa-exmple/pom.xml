@@ -45,6 +45,10 @@
         <module>helloworld</module>
         <module>prompt</module>
         <module>mem0</module>
+        <module>chat-memory</module>
+        <module>structured</module>
+        <module>tool-calling</module>
+        <module>agent</module>
 
     </modules>
 
