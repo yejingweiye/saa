@@ -74,7 +74,7 @@ public class FlightBookingService {
                 .filter(b -> b.getBookingNumber().equalsIgnoreCase(bookingNumber))
                 .filter(b -> b.getCustomer().getName().equalsIgnoreCase(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Booking not found"));
+                .orElseThrow(() -> new IllegalArgumentException("未找到该机票预订记录"));
     }
 
     public BookingTools.BookingDetails getBookingDetails(String bookingNumber, String name) {
@@ -84,8 +84,9 @@ public class FlightBookingService {
 
     public void changeBooking(String bookingNumber, String name, String newDate, String from, String to) {
         var booking = findBooking(bookingNumber, name);
+        // 距离出发日期不足24小时，不允许修改订单
         if (booking.getDate().isBefore(LocalDate.now().plusDays(1))) {
-            throw new IllegalArgumentException("Booking cannot be changed within 24 hours of the start date.");
+            throw new IllegalArgumentException("距离出发日期不足24小时，该预订无法修改。");
         }
         booking.setDate(LocalDate.parse(newDate));
         booking.setFrom(from);
@@ -94,8 +95,9 @@ public class FlightBookingService {
 
     public void cancelBooking(String bookingNumber, String name) {
         var booking = findBooking(bookingNumber, name);
+        // 距离出发日期不足48小时，不允许取消订单
         if (booking.getDate().isBefore(LocalDate.now().plusDays(2))) {
-            throw new IllegalArgumentException("Booking cannot be cancelled within 48 hours of the start date.");
+            throw new IllegalArgumentException("距离出发日期不足48小时，该预订无法取消。");
         }
         booking.setBookingStatus(BookingStatus.CANCELLED);
     }
