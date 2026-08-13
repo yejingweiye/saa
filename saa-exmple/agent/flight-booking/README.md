@@ -11,6 +11,8 @@
 ### 场景三：我想取消订单，101	云小宝
 <img src="./docs/cancelBooking.png" width="620"/>
 
+### 场景四：取消预订有什么规定？
+<img src="./docs/cancel-terms.png" width="620"/>
 
 ## 知识检索 （RAG via VectorStore）
 基于内存，项目启动，把目录的rag/terms-of-service.txt 按照token 长度切分文档向量化入库
