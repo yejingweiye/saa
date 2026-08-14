@@ -1,0 +1,14 @@
+# MorePlatformController类的chat方法
+GET http://localhost:10014/no-platform/{platform}/{prompt}
+
+###
+# MoreModelCallController类的modelChat方法
+GET http://localhost:10014/no-model/{model}/{prompt}
+
+###
+# 平台
+GET http://localhost:10014/no-platform/ollama/hi
+
+###
+# 平台
+GET http://127.0.0.1:10014/no-platform/dashscope/hi
