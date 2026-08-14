@@ -51,6 +51,7 @@
         <module>agent</module>
         <module>audio</module>
         <module>more-platform-and-model</module>
+        <module>bailian</module>
 
     </modules>
 

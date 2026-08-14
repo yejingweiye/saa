@@ -8,3 +8,4 @@
 ## 7. 智能航班预订助手系统 agent:flight-booking
 ## 8. 语音文本转换 audio：dashscope-audio
 ## 9. 多平台多模型配置 more-platform-and-model
+## 10.接入百炼智能体 bailian
