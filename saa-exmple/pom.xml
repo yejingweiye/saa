@@ -49,6 +49,7 @@
         <module>structured</module>
         <module>tool-calling</module>
         <module>agent</module>
+        <module>audio</module>
 
     </modules>
 

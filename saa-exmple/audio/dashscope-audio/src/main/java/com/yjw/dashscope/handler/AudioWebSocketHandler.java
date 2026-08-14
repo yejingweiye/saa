@@ -1,13 +1,9 @@
 package com.yjw.dashscope.handler;
 
 import com.alibaba.cloud.ai.dashscope.api.DashScopeAudioTranscriptionApi;
-import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionModel;
-import com.alibaba.cloud.ai.dashscope.audio.DashScopeAudioTranscriptionOptions;
-import com.alibaba.cloud.ai.dashscope.spec.DashScopeModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ai.audio.transcription.AudioTranscriptionResponse;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.stereotype.Component;
@@ -20,7 +16,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
 import java.nio.ByteBuffer;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -33,12 +28,12 @@ public class AudioWebSocketHandler extends BinaryWebSocketHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(AudioWebSocketHandler.class);
 
-    private final DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel;
+    private final DashScopeAudioTranscriptionApi dashScopeAudioTranscriptionApi;
     private final ObjectMapper objectMapper;
     private final Map<String, Sinks.Many<DataBuffer>> audioSinks = new ConcurrentHashMap<>();
 
-    public AudioWebSocketHandler(DashScopeAudioTranscriptionModel dashScopeAudioTranscriptionModel) {
-        this.dashScopeAudioTranscriptionModel = dashScopeAudioTranscriptionModel;
+    public AudioWebSocketHandler(DashScopeAudioTranscriptionApi dashScopeAudioTranscriptionApi) {
+        this.dashScopeAudioTranscriptionApi = dashScopeAudioTranscriptionApi;
         this.objectMapper = new ObjectMapper();
     }
 
@@ -50,30 +45,22 @@ public class AudioWebSocketHandler extends BinaryWebSocketHandler {
         Sinks.Many<DataBuffer> sink = Sinks.many().multicast().onBackpressureBuffer();
         audioSinks.put(session.getId(), sink);
 
-        // 获取 Flux<DataBuffer>
-        Flux<DataBuffer> audioStream = sink.asFlux();
-
-        // 配置转录选项
-        DashScopeAudioTranscriptionOptions options = DashScopeAudioTranscriptionOptions.builder()
-                .model(DashScopeModel.AudioModel.PARAFORMER_REALTIME_V2.getValue())
-                .sampleRate(16000)
-                .format(DashScopeAudioTranscriptionApi.AudioFormat.PCM)
-                .disfluencyRemovalEnabled(false)
-                .languageHints(List.of("zh"))
-                .vocabularyId(null)
-                .build();
+        // 获取 Flux<ByteBuffer>
+        Flux<ByteBuffer> audioStream = sink.asFlux().map(dataBuffer -> dataBuffer.asByteBuffer());
 
         // 调用转录 API
-        Flux<AudioTranscriptionResponse> responses = dashScopeAudioTranscriptionModel.stream(audioStream, options);
+        Flux<DashScopeAudioTranscriptionApi.RealtimeResponse> responses =
+                dashScopeAudioTranscriptionApi.realtimeStream(audioStream);
 
         // 订阅结果，推回前端
         responses.subscribe(
                 response -> {
                     try {
-                        AudioTranscriptionResponse r =  response;
-                        DashScopeAudioTranscriptionApi.Outcome.Transcript.Sentence sentence = r.getMetadata().getSentence();
+                        DashScopeAudioTranscriptionApi.RealtimeResponse.Payload.Output output = response.payload() == null ? null : response.payload().output();
+                        DashScopeAudioTranscriptionApi.RealtimeResponse.Payload.Output.Sentence sentence = output == null ? null : output.sentence();
                         if (sentence != null && sentence.text() != null) {
                             String text = sentence.text();
+
                             logger.info("Transcription result for session {}: {}", session.getId(), text);
 
                             // 构建并发送 JSON 响应
@@ -90,9 +77,7 @@ public class AudioWebSocketHandler extends BinaryWebSocketHandler {
                     logger.error("Transcription error for session {}", session.getId(), error);
                     sendError(session, "转录错误: " + error.getMessage());
                 },
-                () -> {
-                    logger.info("Transcription completed for session {}", session.getId());
-                }
+                () -> logger.info("Transcription completed for session {}", session.getId())
         );
     }
 
