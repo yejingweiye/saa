@@ -50,6 +50,7 @@
         <module>tool-calling</module>
         <module>agent</module>
         <module>audio</module>
+        <module>more-platform-and-model</module>
 
     </modules>
 
