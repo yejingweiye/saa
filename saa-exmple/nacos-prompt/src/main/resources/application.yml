@@ -1,0 +1,23 @@
+
+
+server:
+  port: 10010
+
+spring:
+  application:
+    name: nacos-prompt
+
+  # 指定监听的 prompt 配置
+  config:
+    import:
+      - "optional:nacos:prompt-config.json"
+  nacos:
+    username: nacos
+    password: nacos
+
+  ai:
+    # 开启 nacos 的 prompt tmpl 监听功能
+    nacos:
+      prompt:
+        template:
+          enabled: true
