@@ -149,9 +149,9 @@ public class DashScopeChatModelController {
     public String customChat() {
 
         DashScopeChatOptions customOptions = DashScopeChatOptions.builder()
-                .topP(0.7)
-                .topK(50)
-                .temperature(0.8)
+                .topP(0.7)  // 控制生成的多样性
+                .topK(50)  // 限制候选词数量
+                .temperature(0.8) // 控制随机性
                 .build();
 
         return dashScopeChatModel.call(new Prompt(DEFAULT_PROMPT, customOptions)).getResult().getOutput().getText();
@@ -169,10 +169,10 @@ public class DashScopeChatModelController {
         response.setCharacterEncoding("UTF-8");
 
         var searchOptions = DashScopeApiSpec.SearchOptions.builder()
-                .forcedSearch(true)
-                .enableSource(true)
+                .forcedSearch(true) // 强制搜索
+                .enableSource(true) // 启用来源信息
                 .searchStrategy("pro")
-                .enableCitation(true)
+                .enableCitation(true) // 启用引用标注
                 .citationFormat("[<number>]")
                 .build();
 
@@ -219,6 +219,7 @@ public class DashScopeChatModelController {
     }
 
     /**
+     * 内容审核特殊业务场景使用
      * DashScope 自定义请求头演示
      * 这个头是数据隔离 CIP 场景使用，普通开发者没有开通该能力时，携带这个头也可能造成请求异常；普通测试不需要传这个 header。
      */
