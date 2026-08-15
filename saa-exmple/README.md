@@ -10,3 +10,4 @@
 ## 9. 多平台多模型配置 more-platform-and-model
 ## 10.接入百炼智能体 bailian
 ## 11.提示词动态变更 nacos-prompt
+## 12.文生图 image:dashscope-image

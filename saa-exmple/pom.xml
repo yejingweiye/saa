@@ -53,6 +53,7 @@
         <module>more-platform-and-model</module>
         <module>bailian</module>
         <module>nacos-prompt</module>
+        <module>image</module>
 
     </modules>
 
