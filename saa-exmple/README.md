@@ -11,4 +11,5 @@
 ## 10.接入百炼智能体 bailian
 ## 11.提示词动态变更 nacos-prompt
 ## 12.文生图 image:dashscope-image
-## 13. 集成不同的大模型 chat (dashscope-chat这个功能齐全)
+## 13. 集成不同的大模型 chat 
+dashscope-chat:联网搜索、token统计
