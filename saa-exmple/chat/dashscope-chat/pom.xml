@@ -8,26 +8,32 @@
 
     <parent>
         <groupId>com.yjw</groupId>
-        <artifactId>saa-example</artifactId>
+        <artifactId>chat</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <version>${revision}</version>
-    <artifactId>chat</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>dashscope-chat</artifactId>
+    <description>Dashscope Chat Example</description>
+    <name>Dashscope Chat</name>
 
-    <description>Chat Example</description>
-    <name>Alibaba Chat</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
-    <modules>
+        <dependency>
+            <groupId>com.alibaba.cloud.ai</groupId>
+            <artifactId>spring-ai-alibaba-starter-dashscope</artifactId>
+        </dependency>
 
-        <module>openai-chat</module>
-        <module>deepseek-chat</module>
-        <module>deepseek-chat</module>
-        <module>azure-openai-chat</module>
-        <module>dashscope-chat</module>
-    </modules>
+        <!-- 自定义 Webclient http client 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
