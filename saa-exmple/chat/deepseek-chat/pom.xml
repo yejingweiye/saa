@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
+
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -8,24 +9,27 @@
 
     <parent>
         <groupId>com.yjw</groupId>
-        <artifactId>saa-example</artifactId>
+        <artifactId>chat</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <version>${revision}</version>
-    <artifactId>chat</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>deepseek-chat</artifactId>
 
-    <description>Chat Example</description>
-    <name>Alibaba Chat</name>
+    <description>DeepSeek Chat Example</description>
+    <name>DeepSeek Chat</name>
 
-    <modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
-        <module>openai-chat</module>
-        <module>deepseek-chat</module>
-        <module>deepseek-chat</module>
-    </modules>
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-model-deepseek</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -39,5 +43,16 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>
