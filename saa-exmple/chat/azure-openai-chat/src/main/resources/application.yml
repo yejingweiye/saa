@@ -1,0 +1,12 @@
+server:
+  port: 10009
+
+spring:
+  application:
+    name: azure-openai-chat
+  ai:
+    azure:
+      openai:
+        api-key: ${AI_AZURE_OPENAI_API_KEY}
+        endpoint: ${AI_AZURE_OPENAI_ENDPOINT}
+

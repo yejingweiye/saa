@@ -25,6 +25,7 @@
         <module>openai-chat</module>
         <module>deepseek-chat</module>
         <module>deepseek-chat</module>
+        <module>azure-openai-chat</module>
     </modules>
 
     <build>
