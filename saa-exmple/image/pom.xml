@@ -23,6 +23,7 @@
     <modules>
 
         <module>dashscope-image</module>
+        <module>openai-image</module>
     </modules>
 
     <build>
