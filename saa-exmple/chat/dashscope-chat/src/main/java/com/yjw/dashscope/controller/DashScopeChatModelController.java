@@ -220,6 +220,7 @@ public class DashScopeChatModelController {
 
     /**
      * DashScope 自定义请求头演示
+     * 这个头是数据隔离 CIP 场景使用，普通开发者没有开通该能力时，携带这个头也可能造成请求异常；普通测试不需要传这个 header。
      */
     @GetMapping("/custom/http-headers")
     public Flux<String> customHttpHeaders(HttpServletResponse response) throws JsonProcessingException {
