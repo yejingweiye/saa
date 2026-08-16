@@ -12,4 +12,5 @@
 ## 11.提示词动态变更 nacos-prompt
 ## 12.文生图 image:dashscope-image
 ## 13. 集成不同的大模型 chat 
-dashscope-chat:联网搜索、token统计
+dashscope-chat:联网搜索、token统计、分析图片
+qwq-chat: 深度思考内容输出

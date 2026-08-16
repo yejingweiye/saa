@@ -27,6 +27,7 @@
         <module>deepseek-chat</module>
         <module>azure-openai-chat</module>
         <module>dashscope-chat</module>
+        <module>qwq-chat</module>
     </modules>
 
     <build>

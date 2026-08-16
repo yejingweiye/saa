@@ -2,3 +2,4 @@
 ## deepseek
 ## azure-openai
 ## dashscope
+## qwq
