@@ -5,3 +5,4 @@
 ## qwq
 ## zhipu
 ## moonshot
+## ollama

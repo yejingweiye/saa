@@ -30,6 +30,7 @@
         <module>qwq-chat</module>
         <module>zhipuai-chat</module>
         <module>moonshot-chat</module>
+        <module>ollama-chat</module>
     </modules>
 
     <build>
