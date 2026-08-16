@@ -11,6 +11,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/java-skill/pom.xml" />
+        <option value="$PROJECT_DIR$/saa-exmple/Rag/pom.xml" />
         <option value="$PROJECT_DIR$/saa-exmple/helloword/pom.xml" />
         <option value="$PROJECT_DIR$/spring-cloud-base/pom.xml" />
         <option value="$PROJECT_DIR$/spring-cloud-base/scb-common/pom.xml" />
