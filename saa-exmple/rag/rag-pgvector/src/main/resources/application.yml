@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: rag-pgvector
+
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/postgres
+    username: postgres
+    password: postgres
+
+  ai:
+    dashscope:
+      api-key: ${AI_DASHSCOPE_API_KEY}
+#      api-key: ${DASH_SCOPE_API_KEY}
+      embedding:
+        options:
+          model: text-embedding-v2
+    vectorstore:
+      pgvector:
+        dimensions: 1536
+        index-type: hnsw
+        distance-type: cosine_distance
