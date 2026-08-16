@@ -115,6 +115,13 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
             Path tempFile = Files.createTempFile("upload_", "_" + file.getOriginalFilename());
             Files.copy(file.getInputStream(), tempFile, StandardCopyOption.REPLACE_EXISTING);
 
+            // 新增校验：临时文件是否有内容
+            long fileByteSize = Files.size(tempFile);
+            logger.info("临时文件创建完成，路径:{}, 文件字节大小:{}", tempFile, fileByteSize);
+            if (fileByteSize == 0) {
+                return "上传文件为空，无法解析";
+            }
+
             List<Document> documents;
             String fileName = file.getOriginalFilename();
 
@@ -192,6 +199,7 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
 
             // 构建提示词
             String prompt = String.format("基于以下知识库内容回答用户问题。如果知识库内容无法回答问题，请明确说明。\n\n" + "知识库内容：\n%s\n\n" + "用户问题：%s\n\n" + "请基于上述知识库内容给出准确、有用的回答：", context, query);
+            logger.info("提示词: {}", prompt);
 
             // 调用LLM生成流式回答
             return chatClient.prompt(prompt).stream().content();

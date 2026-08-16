@@ -14,3 +14,5 @@
 ## 13. 集成不同的大模型 chat 
 dashscope-chat:联网搜索、token统计、分析图片
 qwq-chat: 深度思考内容输出
+## 14. 集成不同的向量库作为知识库
+rag-openai-dashscope-pgvector: 多格式支持文档录入
