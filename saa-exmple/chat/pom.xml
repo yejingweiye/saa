@@ -31,6 +31,7 @@
         <module>zhipuai-chat</module>
         <module>moonshot-chat</module>
         <module>ollama-chat</module>
+        <module>vllm-chat</module>
     </modules>
 
     <build>

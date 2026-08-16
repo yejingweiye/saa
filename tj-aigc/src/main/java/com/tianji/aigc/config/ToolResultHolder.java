@@ -10,8 +10,6 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 工具结果保持器，用来存储tools中得到的结果，请求id 作为key， value为键值对数据
  *
- * @author zzj
- * @version 1.0
  */
 public class ToolResultHolder {
 
