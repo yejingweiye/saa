@@ -1,0 +1,2 @@
+# QWQChatClientController类的streamChat方法
+GET http://localhost:10002/client/stream/chat
