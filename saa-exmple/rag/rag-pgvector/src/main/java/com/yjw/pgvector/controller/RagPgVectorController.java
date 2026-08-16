@@ -43,7 +43,7 @@ public class RagPgVectorController {
 
     private final ChatModel chatModel;
 
-    // 重排序模型
+    // 重排序模型 DashScopeRerankModel免费额度
     private final RerankModel rerankModel;
 
     public RagPgVectorController(VectorStore vectorStore, ChatModel chatModel, RerankModel rerankModel) {
