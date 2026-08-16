@@ -3,3 +3,4 @@
 ## azure-openai
 ## dashscope
 ## qwq
+## zhipu
