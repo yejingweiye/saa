@@ -6,3 +6,4 @@
 ## zhipu
 ## moonshot
 ## ollama
+## vllm
