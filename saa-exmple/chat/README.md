@@ -4,3 +4,4 @@
 ## dashscope
 ## qwq
 ## zhipu
+## moonshot
