@@ -29,6 +29,7 @@
         <module>dashscope-chat</module>
         <module>qwq-chat</module>
         <module>zhipuai-chat</module>
+        <module>moonshot-chat</module>
     </modules>
 
     <build>
