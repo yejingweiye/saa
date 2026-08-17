@@ -25,6 +25,7 @@
         <module>rag-pgvector</module>
         <module>rag-milvus</module>
         <module>rag-elasticsearch</module>
+        <module>module-rag</module>
     </modules>
 
     <build>

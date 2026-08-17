@@ -1,0 +1,31 @@
+
+
+server:
+  port: 10014
+
+spring:
+  application:
+    name: module-rag
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/vector_store
+    username: root
+    password: password
+
+  ai:
+    dashscope:
+      api-key: ${AI_DASHSCOPE_API_KEY}
+      embedding:
+        options:
+          model: text-embedding-v2
+
+    vectorstore:
+      elasticsearch:
+        index-name: spring-ai-alibaba-index
+        similarity: cosine
+        dimensions: 1536
+        #关键配置：自动创建索引
+        initialize-schema: true
+
+  elasticsearch:
+    uris: http://127.0.0.1:9200
