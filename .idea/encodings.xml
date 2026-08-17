@@ -49,6 +49,8 @@
     <file url="file://$PROJECT_DIR$/saa-exmple/nacos-prompt/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/prompt/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/prompt/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/saa-exmple/rag/rag-milvus/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/saa-exmple/rag/rag-milvus/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/rag/rag-openai-dashscope-pgvector/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/rag/rag-openai-dashscope-pgvector/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/rag/rag-pgvector/src/main/java" charset="UTF-8" />

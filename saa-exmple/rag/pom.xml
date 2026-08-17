@@ -23,6 +23,7 @@
 
         <module>rag-openai-dashscope-pgvector</module>
         <module>rag-pgvector</module>
+        <module>rag-milvus</module>
     </modules>
 
     <build>
