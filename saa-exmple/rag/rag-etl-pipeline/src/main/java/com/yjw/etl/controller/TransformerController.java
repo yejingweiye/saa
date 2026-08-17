@@ -91,6 +91,7 @@ public class TransformerController {
 
     /**
      * 摘要增强
+     * 备注：数据量大一条一条发给大模型修改很慢，接口容易超时
      * @return
      */
     @GetMapping("/summary-metadata-enricher")
