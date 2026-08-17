@@ -24,6 +24,6 @@
 spring cloud Alibaba 基础复用框架
 
 ## 4.saa-exmple
-spring AI Alibaba 各种exmple
+基于 spring AI Alibaba 实现的各种exmple
 
 

@@ -49,8 +49,12 @@
     <file url="file://$PROJECT_DIR$/saa-exmple/nacos-prompt/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/prompt/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/prompt/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/saa-exmple/rag/module-rag/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/saa-exmple/rag/module-rag/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/rag/rag-elasticsearch/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/rag/rag-elasticsearch/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/saa-exmple/rag/rag-etl-pipeline/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/saa-exmple/rag/rag-etl-pipeline/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/rag/rag-milvus/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/rag/rag-milvus/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/rag/rag-openai-dashscope-pgvector/src/main/java" charset="UTF-8" />

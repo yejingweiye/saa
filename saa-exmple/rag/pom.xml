@@ -26,6 +26,7 @@
         <module>rag-milvus</module>
         <module>rag-elasticsearch</module>
         <module>module-rag</module>
+        <module>rag-etl-pipeline</module>
     </modules>
 
     <build>
