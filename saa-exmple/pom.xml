@@ -57,6 +57,7 @@
         <module>chat</module>
         <module>Rag</module>
         <module>rag</module>
+        <module>mcp</module>
 
     </modules>
 
