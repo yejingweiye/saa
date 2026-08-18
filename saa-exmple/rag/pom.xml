@@ -27,6 +27,7 @@
         <module>rag-elasticsearch</module>
         <module>module-rag</module>
         <module>rag-etl-pipeline</module>
+        <module>bailian-agent</module>
     </modules>
 
     <build>
