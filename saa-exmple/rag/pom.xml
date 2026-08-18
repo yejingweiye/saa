@@ -28,6 +28,7 @@
         <module>module-rag</module>
         <module>rag-etl-pipeline</module>
         <module>bailian-agent</module>
+        <module>bailian-rag-knowledge</module>
     </modules>
 
     <build>
