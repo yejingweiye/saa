@@ -1,0 +1,43 @@
+services:
+  neo4j:
+    image: neo4j:5.23-community
+    container_name: neo4j-vector
+    restart: unless-stopped
+
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+
+    environment:
+      NEO4J_AUTH: neo4j/12345678
+
+      # 8GB 内存机器建议限制 Neo4j JVM
+      NEO4J_server_memory_heap_initial__size: 512m
+      NEO4J_server_memory_heap_max__size: 2g
+
+      # Page Cache
+      NEO4J_server_memory_pagecache_size: 1g
+
+      # 允许 Neo4j 访问本地目录
+      NEO4J_server_directories_import: /var/lib/neo4j/import
+
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/var/lib/neo4j/import
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  neo4j_import:

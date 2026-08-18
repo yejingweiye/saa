@@ -30,6 +30,7 @@
         <module>bailian-agent</module>
         <module>bailian-rag-knowledge</module>
         <module>vector-databases</module>
+        <module>vector-databases/vector-neo4j</module>
     </modules>
 
     <build>
