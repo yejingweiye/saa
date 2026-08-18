@@ -5,7 +5,7 @@
 ## 5. module-rag ***** （检索增强）
 ## 6. rag-etl-pipeline ***** （数据清洗）
 ## 7. bailian-agent(百炼智能体低代码)
-## 8. bailian-rag-knowledge(百炼智能体低代码)
+## 8. bailian-rag-knowledge(百炼智能体低代码-检索和导入云知识库)
 
 备注有*的重点关注
 DocumentRetrievalAdvisor QuestionAnswerAdvisor RetrievalAugmentationAdvisor 
