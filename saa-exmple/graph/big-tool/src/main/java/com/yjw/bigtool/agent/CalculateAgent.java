@@ -49,6 +49,7 @@ public class CalculateAgent implements NodeAction {
 
         List<ToolCallback> toolCallbacks = new ArrayList<>();
 
+        // 编程式手动构建 MethodToolCallback
         // 遍历文档列表，每个Document对应一个工具方法的元数据
         for (Document document : documents) {
             // 从文档元数据中获取方法名、方法参数类型数组，通过反射查找Math类对应的Method对象
