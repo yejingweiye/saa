@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  oceanbase:
+    image: oceanbase/oceanbase-ce:4.2.5.3-103000022025033117
+    container_name: oceanbase
+    restart: unless-stopped
+    environment:
+      - MODE=MINI
+      - OB_TENANT_PASSWORD=test
+      - OB_DATAFILE_SIZE=1G
+      - OB_MEMORY_LIMIT=2G
+      - OB_LOG_DISK_SIZE=1G
+    ports:
+      - "2881:2881"
+    volumes:
+      - ./ob_demo_data:/root/ob
+    deploy:
+      resources:
+        limits:
+          memory: 3G
+        reservations:
+          memory: 2G
+    privileged: true

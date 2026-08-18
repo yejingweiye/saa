@@ -32,6 +32,7 @@
         <module>vector-databases</module>
         <module>vector-databases/vector-neo4j</module>
         <module>vector-databases/vector-redis</module>
+        <module>vector-databases/vector-oceanbase</module>
     </modules>
 
     <build>
