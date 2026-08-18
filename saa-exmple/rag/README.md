@@ -6,6 +6,7 @@
 ## 6. rag-etl-pipeline ***** （数据清洗）
 ## 7. bailian-agent(百炼智能体低代码)
 ## 8. bailian-rag-knowledge(百炼智能体低代码-检索和导入云知识库)
+## 9. vector-databases ***** （向量数据库）
 
 备注有*的重点关注
 DocumentRetrievalAdvisor QuestionAnswerAdvisor RetrievalAugmentationAdvisor 
