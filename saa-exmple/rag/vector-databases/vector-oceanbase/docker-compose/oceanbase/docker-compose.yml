@@ -9,7 +9,8 @@ services:
       - MODE=MINI
       - OB_TENANT_PASSWORD=test
       - OB_DATAFILE_SIZE=1G
-      - OB_MEMORY_LIMIT=2G
+      - OB_MEMORY_LIMIT=4G
+      - OB_SYSTEM_MEMORY=1G
       - OB_LOG_DISK_SIZE=1G
     ports:
       - "2881:2881"
