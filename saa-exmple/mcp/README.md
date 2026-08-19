@@ -9,5 +9,5 @@
 3. nacos
 
 ## mcp-manual: 
-1. mcp操作本地文件
+1. ai-mcp-fileserver: mcp操作本地文件
 2. 

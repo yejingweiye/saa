@@ -22,6 +22,7 @@
     <modules>
 
         <module>ai-mcp-fileserver</module>
+        <module>ai-mcp-github</module>
     </modules>
 
     <build>
