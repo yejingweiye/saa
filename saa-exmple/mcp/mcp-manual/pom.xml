@@ -23,6 +23,7 @@
 
         <module>ai-mcp-fileserver</module>
         <module>ai-mcp-github</module>
+        <module>sqlite</module>
     </modules>
 
     <build>

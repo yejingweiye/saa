@@ -10,4 +10,4 @@
 
 ## mcp-manual: 
 1. ai-mcp-fileserver: mcp操作本地文件
-2. 
+2. ai-mcp-github: mcp 操作GitHub仓库
