@@ -1,0 +1,20 @@
+server:
+  port: 20000
+
+spring:
+  application:
+    name: mcp-streamable-webflux-server
+  ai:
+    mcp:
+      server:
+        name: streamable-mcp-server
+        protocol: STREAMABLE # SSE、STREAMABLE、STATELESS
+        version: 1.0.0
+        type: ASYNC  # Recommended for reactive applications
+        # 服务提示词，MCP 客户端连接成功后，会把这段描述交给大模型，告诉模型：这个 MCP 服务提供什么能力，模型据此决定要不要调用这里工具。
+        instructions: "该响应式服务提供时间信息相关工具与资源"
+        request-timeout: 20s
+        streamable-http:
+          mcp-endpoint: /mcp
+          keep-alive-interval: 30s
+          disallow-delete: false

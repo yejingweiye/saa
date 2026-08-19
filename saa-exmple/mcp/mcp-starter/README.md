@@ -14,6 +14,7 @@ mcp-webflux-server vs mcp-webflux-client
 基于http和sse
 
 ## 流式通信
+mcp-streamable-webflux-server vs mcp-streamable-webflux-client
 
 
 

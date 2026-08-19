@@ -26,6 +26,8 @@
 
         <module>server/mcp-webflux-server</module>
         <module>client/mcp-webflux-client</module>
+        <module>server/mcp-streamable-webflux-server</module>
+        <module>client/mcp-streamable-webflux-client</module>
     </modules>
 
     <build>
