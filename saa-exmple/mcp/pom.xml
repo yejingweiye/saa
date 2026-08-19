@@ -24,6 +24,7 @@
 
         <module>mcp-starter</module>
         <module>mcp-auth</module>
+        <module>mcp-config</module>
 
     </modules>
 

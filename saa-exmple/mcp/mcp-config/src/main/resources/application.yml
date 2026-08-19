@@ -1,0 +1,102 @@
+spring:
+  application:
+    name: mcp-config   # 应用名称，当前服务叫 mcp-config-example
+
+  ai:
+    dashscope:
+      api-key: ${AI_DASHSCOPE_API_KEY}
+      # DashScope 模型服务的 API Key。
+      # 这里从环境变量 AI_DASHSCOPE_API_KEY 读取。
+      # 也就是说，模型调用时会用这个 key 去访问阿里云 DashScope。
+
+    mcp:
+      server:
+        enabled: false
+        # 表示当前应用不启动 MCP Server。
+        # 也就是这个项目更像是“客户端/路由器”，而不是提供 MCP 服务的服务端。
+        # 如果启用为 true，则本应用会暴露 MCP 服务端点，供其他应用调用。
+
+    alibaba:
+      mcp:
+        router:
+          enabled: true
+          # 开启 MCP 路由器。
+          # 路由器会统一管理并发现多个 MCP 服务，并让上层 AI 应用按需选择调用。
+          # 例如：天气服务、翻译服务、数据库服务等都可以被统一接入。
+
+          discovery-order:
+            - file
+            - database
+            - nacos
+          # 服务发现顺序。
+          # 表示系统按这个顺序尝试发现 MCP 服务：
+          # 1. file：从配置文件中读取
+          # 2. database：从数据库中读取
+          # 3. nacos：从 Nacos 注册中心中读取
+          # 也就是优先级：文件配置 > 数据库配置 > Nacos 配置。
+
+          services:
+            - name: weather-service
+              description: "天气查询服务"
+              protocol: "http"
+              version: "1.0.0"
+              endpoint: "http://localhost:8080/weather"
+              enabled: true
+              tags:
+                - "weather"
+                - "api"
+
+              # 这是一个 MCP 服务注册项，表示：
+              # - name：服务名称
+              # - description：服务描述
+              # - protocol：协议类型，http
+              # - version：版本号
+              # - endpoint：服务地址
+              # - enabled：是否启用
+              # - tags：标签，用于分类和检索
+              #
+              # 也就是说，系统会把这个 HTTP 服务当作一个 MCP 服务
+              # 供 AI Agent 调用，比如“查询天气”。
+
+            - name: translation-service
+              description: "翻译服务"
+              protocol: "http"
+              version: "2.0.0"
+              endpoint: "http://localhost:8081/translate"
+              enabled: true
+              tags:
+                - "translation"
+                - "nlp"
+
+              # 第二个 MCP 服务：
+              # - name: translation-service
+              # - endpoint: http://localhost:8081/translate
+              # - 说明这是一个翻译接口
+              # - tags 中包含 translation, nlp，说明它属于翻译/自然语言处理类工具
+
+          database:
+            enabled: true
+            # 开启数据库方式的服务发现。
+            # 表示路由器不仅可以从文件读取服务配置，还可以从数据库中动态获取 MCP 服务信息。
+
+            url: jdbc:mysql://localhost:3306/testdb?useSSL=false&serverTimezone=UTC
+            # 数据库连接地址
+            # 这里连接的是本地 MySQL，库名是 testdb
+
+            username: root
+            # 数据库用户名
+
+            password: root
+            # 数据库密码
+
+            driver-class-name: com.mysql.cj.jdbc.Driver
+            # JDBC 驱动类，告诉 Spring/MySQL 连接器使用哪种 JDBC 驱动
+
+        nacos:
+          server-addr: localhost:8848
+          # Nacos 服务地址
+          # 也就是注册中心的地址，通常是 localhost:8848
+
+          namespace: public
+          # Nacos 命名空间
+          # public 是默认公共命名空间
