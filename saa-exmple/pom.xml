@@ -58,6 +58,7 @@
         <module>Rag</module>
         <module>rag</module>
         <module>mcp</module>
+        <module>graph</module>
 
     </modules>
 
