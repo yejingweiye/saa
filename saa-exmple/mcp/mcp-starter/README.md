@@ -10,9 +10,10 @@ mcp-stdio-server vs mcp-stdio-client
 最常用本地通信模式，用于同一台机器上，AI 客户端与 MCP 服务进程之间交换 JSON‑RPC 消息
 
 ## webflux 通信
-
+mcp-webflux-server vs mcp-webflux-client
 基于http和sse
 
 ## 流式通信
+
 
 

@@ -23,6 +23,9 @@
 
        <module>server/mcp-stdio-server</module>
         <module>client/mcp-stdio-client</module>
+
+        <module>server/mcp-webflux-server</module>
+        <module>client/mcp-webflux-client</module>
     </modules>
 
     <build>
