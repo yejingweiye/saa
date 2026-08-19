@@ -1,0 +1,20 @@
+server:
+  port: 20000   # 服务端口号
+
+spring:
+  application:
+    name: mcp-auth-web-server   # 应用名称
+
+  ai:
+    mcp:
+      server:
+        name: streamable-mcp-server   # MCP 服务器名称
+        protocol: STREAMABLE          # 协议类型：SSE、STREAMABLE、STATELESS
+        version: 1.0.0                # 版本号
+        type: ASYNC                   # 类型：异步，适合响应式应用
+        instructions: "这个响应式服务提供时间信息工具和资源"
+        request-timeout: 20s          # 请求超时时间
+        streamable-http:
+          mcp-endpoint: /mcp          # MCP 接口端点地址
+          keep-alive-interval: 30s    # 心跳保活时间
+          disallow-delete: false      # 是否禁止 DELETE 请求

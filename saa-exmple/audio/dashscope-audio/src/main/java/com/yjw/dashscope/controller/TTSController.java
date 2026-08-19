@@ -27,11 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-/**
- * @author yingzi, yuluo
- * @since 2026/2/6
- * 章节内容：语音合成
- */
+
 @RestController
 @RequestMapping("/ai/video/tts")
 public class TTSController {
