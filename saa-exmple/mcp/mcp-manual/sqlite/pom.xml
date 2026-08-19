@@ -14,6 +14,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>ai-mcp-sqlite</module>
+        <module>ai-mcp-sqlite-chatbot</module>
     </modules>
 
     <properties>

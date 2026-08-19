@@ -86,7 +86,8 @@ public class MCPSqlitApplication {
         // uvx：uv工具提供的执行器，类似npx，用来运行python编写的mcp‑server‑sqlite服务
         // Windows注意：部分环境需要改为 uvx.exe
         var stdioParams = ServerParameters.builder("uvx")
-                .args("mcp-server-sqlite", "--db-path", getDbPath())
+                // --with mcp<2 固定 Python mcp SDK 版本：最新 mcp-server-sqlite 与 mcp 2.x 不兼容（移除了 Server.list_resources），会导致 MCP 子进程启动即崩溃
+                .args("--with", "mcp<2", "mcp-server-sqlite", "--db-path", getDbPath())
                 .build();
 
         // 创建MCP同步客户端，使用Stdio管道和sqlite MCP子进程通信，设置请求超时10秒
