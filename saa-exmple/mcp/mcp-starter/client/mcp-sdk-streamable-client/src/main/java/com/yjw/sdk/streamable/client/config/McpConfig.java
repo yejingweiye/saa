@@ -77,6 +77,29 @@ public class McpConfig {
                 .build();
     }
 
+    // 改造一个可以测试的tool 对应mcp-streamable-webflux-server  20000端口
+    @Bean
+    public McpSchema.Tool getCityTimeTool() {
+        String inputSchema = """
+        {
+          "type": "object",
+          "required": ["timeZoneId"],
+          "properties": {
+            "timeZoneId": {
+              "type": "string",
+              "description": "时区ID，例如 Asia/Shanghai"
+            }
+          }
+        }
+        """;
+
+        return McpSchema.Tool.builder()
+                .name("getCityTimeMethod")
+                .description("获取指定城市的时间。")
+                .inputSchema(inputSchema)
+                .build();
+    }
+
     /**
      * Jackson JSON序列化器，用于MCP协议报文序列化/反序列化
      */

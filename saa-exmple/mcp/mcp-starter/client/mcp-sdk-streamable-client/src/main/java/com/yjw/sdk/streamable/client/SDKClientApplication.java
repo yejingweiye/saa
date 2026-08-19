@@ -31,15 +31,16 @@ public class SDKClientApplication {
     public CommandLineRunner predefinedQuestions(
             ChatClient.Builder chatClientBuilder,
             // 直接注入你配置类产出的 AsyncMcpToolCallback
-            AsyncMcpToolCallback mcpToolCallback,
+//            AsyncMcpToolCallback mcpToolCallback,
+            ToolCallbackProvider mcpToolCallbackProvider,
             ConfigurableApplicationContext context
     ) {
         return args -> {
             ToolCallback[] toolCallbacks;
             try {
                 // 把单个callback组装成数组
-                toolCallbacks = new ToolCallback[]{mcpToolCallback};
-
+//                toolCallbacks = new ToolCallback[]{mcpToolCallback};
+                toolCallbacks = mcpToolCallbackProvider.getToolCallbacks();
                 System.out.println("Available tools:");
                 for (ToolCallback t : toolCallbacks) {
                     System.out.println(">>> " + t.getToolDefinition().name());
