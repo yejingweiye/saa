@@ -8,7 +8,7 @@
     <parent>
         <groupId>com.yjw</groupId>
         <artifactId>agent</artifactId>
-        <version>1.0.0</version>
+        <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>flight-booking</artifactId>
