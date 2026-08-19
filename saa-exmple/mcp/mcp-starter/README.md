@@ -1,4 +1,5 @@
 # MCP 客户端实现
+mcp-sdk-streamable-client
 1. 创建客户端传输Transport
 2. 创建并初始化mcp客户端
 3. 列出可用工具列表
