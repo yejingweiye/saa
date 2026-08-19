@@ -1,0 +1,12 @@
+spring:
+  main:
+    web-application-type: none # 纯命令行进程，不启 Tomcat
+    banner-mode: off # 关闭 banner
+  ai:
+    mcp:
+      server:
+        name: my-weather-server
+        stdio: true # 启用标准输入输出传输
+
+# NOTE: You must disable the banner and the console logging 
+# to allow the STDIO transport to work !!!

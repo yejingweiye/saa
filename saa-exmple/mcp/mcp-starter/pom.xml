@@ -17,10 +17,12 @@
     <packaging>pom</packaging>
 
     <description>Starter MCP</description>
-    <name>Starter MCP Examples</name>
+    <name>Starter MCP</name>
 
     <modules>
 
+       <module>server/mcp-stdio-server</module>
+        <module>client/mcp-stdio-client</module>
     </modules>
 
     <build>

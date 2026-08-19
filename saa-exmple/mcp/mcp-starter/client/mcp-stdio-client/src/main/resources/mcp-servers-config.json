@@ -1,0 +1,15 @@
+{
+    "mcpServers": {
+        "weather": {
+            "command": "java",
+            "args": [
+                "-Dspring.ai.mcp.server.stdio=true",
+                "-Dspring.main.web-application-type=none",
+                "-Dlogging.pattern.console=",
+                "-jar",
+            "/Users/yejingwei/IdeaProjects/saa/saa-exmple/mcp/mcp-starter/server/mcp-stdio-server/target/mcp-stdio-server-1.0.0.jar"
+            ],
+            "env": {}
+        }
+    }
+}
