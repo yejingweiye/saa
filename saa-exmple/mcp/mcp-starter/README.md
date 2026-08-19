@@ -16,5 +16,11 @@ mcp-webflux-server vs mcp-webflux-client
 ## 流式通信
 mcp-streamable-webflux-server vs mcp-streamable-webflux-client
 
+##
+mcp-webflux-server vs mcp-annotation-client 
+
+## 多出
+mcp-streamable-webmvc-server vs mcp-streamble-client 
+
 
 

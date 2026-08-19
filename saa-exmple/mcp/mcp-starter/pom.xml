@@ -28,6 +28,10 @@
         <module>client/mcp-webflux-client</module>
         <module>server/mcp-streamable-webflux-server</module>
         <module>client/mcp-streamable-webflux-client</module>
+        <module>server/mcp-annotation-server</module>
+        <module>client/mcp-annotation-client</module>
+        <module>server/mcp-streamable-webmvc-server</module>
+        <module>client/mcp-streamble-client</module>
     </modules>
 
     <build>
