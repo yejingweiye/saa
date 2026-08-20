@@ -1,0 +1,34 @@
+server:
+  port: 21000
+
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: mcp-nacos-register
+  ai:
+    mcp:
+      server:
+        name: webflux-mcp-server
+        version: 1.0.0
+        type: ASYNC  # Recommended for reactive applications
+        instructions: "This reactive server provides time information tools and resources"
+        protocol: STREAMABLE
+        request-timeout: 20s
+        streamable-http:
+          mcp-endpoint: /mcp
+          keep-alive-interval: 30s
+          disallow-delete: false
+
+# Nacos3.x 环境配置
+    alibaba:
+      mcp:
+        nacos:
+          namespace: 2976aed7-7d09-4161-aa63-8d37f659345f
+          server-addr: 127.0.0.1:8848
+          username: nacos
+          password: nacos
+          register:
+            enabled: true
+            service-group: mcp-server       ## 指定分组名称
+            service-name: webflux-mcp-server ## 指定服务名称

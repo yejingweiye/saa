@@ -13,3 +13,6 @@
 2. ai-mcp-github: mcp 操作GitHub仓库
 3. sqlite>>ai-mcp-sqlite: mcp操作SQLite数据库工具
 4.  sqlite>>ai-mcp-sqlite-chatbot：对话方式 mcp操作SQLite数据库工具
+
+## mcp-nacos: mcp分布式注册nacos 与调用
+

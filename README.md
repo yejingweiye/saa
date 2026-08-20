@@ -1,5 +1,5 @@
 # saa AI应用开发系统
-## 1. tj-aigc
+## 1. tj-aigc 
 基于springAI的【智能推荐客服系统】
 ### 页面
 #### 角色功能
@@ -23,7 +23,9 @@
 ## 3.scab
 spring cloud Alibaba 基础复用框架
 
-## 4.saa-exmple
+## 4.saa-exmple 
 基于 spring AI Alibaba 实现的各种exmple
+### saa-exmple>>mcp>>mcp-nacos 的 mcp 分布式
+<img src="./docs/mcp-nacos-manage.png" width="620"/>
 
 
