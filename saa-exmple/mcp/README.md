@@ -16,3 +16,5 @@
 
 ## mcp-nacos: mcp分布式注册nacos 与调用
 
+## starter-stock-server: 股票行情服务
+

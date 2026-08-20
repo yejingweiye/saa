@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>com.yjw</groupId>
-        <artifactId>saa-example</artifactId>
+        <artifactId>mcp</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <version>${revision}</version>
-    <artifactId>mcp</artifactId>
+    <artifactId>mcp-build</artifactId>
     <packaging>pom</packaging>
 
-    <description>MCP Example</description>
-    <name>MCP</name>
+    <description>MCP BUILD</description>
+    <name>MCP BUILD</name>
 
     <modules>
-
-        <module>mcp-starter</module>
-        <module>mcp-auth</module>
-        <module>mcp-config</module>
-        <module>mcp-manual</module>
-        <module>mcp-nacos</module>
-        <module>mcp-build</module>
-
+        <module>starter-stock-server</module>
+        <module>starter-stock-server</module>
     </modules>
 
     <build>
