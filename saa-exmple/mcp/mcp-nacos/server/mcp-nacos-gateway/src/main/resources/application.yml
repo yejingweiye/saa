@@ -13,6 +13,7 @@ spring:
         protocol: sse
         type: async
         instructions: "Nacos MCP Gateway - 聚合多个 MCP Server 的工具网关"
+#       工具名改写了： webflux_mcp_server_tools_getCityTimeMethod
         sse-message-endpoint: /mcp/messages
         capabilities:
           tool: true
