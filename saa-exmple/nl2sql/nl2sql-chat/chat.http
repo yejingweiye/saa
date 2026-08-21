@@ -1,0 +1,30 @@
+# Nl2sqlForGraphController类的search方法
+GET http://localhost:8065/nl2sql/search?query=查询2025年所有用户的订单总金额
+
+###
+# AnalyticNl2SqlController类的nl2Sql方法
+POST http://localhost:8065/chat
+
+###
+# HomeController类的index方法
+GET http://localhost:8065/
+
+###
+# HomeController类的index方法
+POST http://localhost:8065/
+
+###
+# SimpleChatController类的simpleNl2Sql方法
+POST http://localhost:8065/simpleChat?query=销售额最高的产品是什么
+
+
+###
+# curl -X POST http://127.0.0.1:8065/simpleChat
+#  -H "Content-Type: application/json"
+#  -d "查询2025年所有用户的订单总金额"
+POST http://127.0.0.1:8065/simpleChat
+Content-Type: application/json
+
+"查询2025年所有用户的订单总金额"
+
+###

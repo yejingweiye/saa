@@ -18,3 +18,5 @@
 
 ## starter-stock-server: 股票行情服务
 
+## ../graph>>mcp-node: mcp节点服务是从工具集获取自己节点的mcp
+

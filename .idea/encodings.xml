@@ -35,6 +35,8 @@
     <file url="file://$PROJECT_DIR$/saa-exmple/chat/zhipuai-chat/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/graph/big-tool/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/graph/big-tool/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/saa-exmple/graph/mcp-node/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/saa-exmple/graph/mcp-node/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/graph/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/graph/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/helloworld/src/main/java" charset="UTF-8" />
@@ -109,6 +111,10 @@
     <file url="file://$PROJECT_DIR$/saa-exmple/more-platform-and-model/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/nacos-prompt/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/nacos-prompt/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/saa-exmple/nl2sql/nl2sql-chat/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/saa-exmple/nl2sql/nl2sql-chat/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/saa-exmple/nl2sql/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/saa-exmple/nl2sql/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/prompt/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/prompt/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/saa-exmple/rag/bailian-agent/src/main/java" charset="UTF-8" />

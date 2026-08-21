@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.yjw</groupId>
+        <artifactId>saa-example</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>nl2sql</artifactId>
+    <modules>
+
+        <module>nl2sql-chat</module>
+    </modules>
+
+
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+    <description>Nl2SQl Example</description>
+    <name>Nl2SQl</name>
+
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-ai-alibaba.version>1.0.0.3</spring-ai-alibaba.version>
+        <!-- spring-ai-alibaba nl2sql 系列最高只到 1.0.0.3/1.0.0.4，按 Spring AI 1.0.0 编译；
+             若用父工程继承的 1.1.0，graph-core 1.0.0.3 调用 AssistantMessage 会 IllegalAccessError -->
+        <spring-ai.version>1.0.0</spring-ai.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

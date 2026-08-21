@@ -59,6 +59,7 @@
         <module>rag</module>
         <module>mcp</module>
         <module>graph</module>
+        <module>nl2sql</module>
 
     </modules>
 
