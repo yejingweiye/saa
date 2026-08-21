@@ -16,6 +16,7 @@
 
         <module>nl2sql-chat</module>
         <module>nl2sql-mcp</module>
+        <module>nl2sql-vector-management</module>
     </modules>
 
 
