@@ -15,6 +15,7 @@
     <modules>
 
         <module>nl2sql-chat</module>
+        <module>nl2sql-mcp</module>
     </modules>
 
 

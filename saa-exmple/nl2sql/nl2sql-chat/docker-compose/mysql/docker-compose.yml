@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: nl2sql-mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: nl2sql_demo
+      TZ: Asia/Shanghai
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
