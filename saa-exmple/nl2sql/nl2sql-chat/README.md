@@ -182,12 +182,5 @@ http://localhost:8065/index.html
 
 ---
 
-## 📞 联系方式
 
-如有任何问题，请联系：
-- 邮箱: kunan.lw@alibaba-inc.com
-- GitHub: [willyomg](https://github.com/willyomg)
-
-- 邮箱: xuqirui.xqr@alibaba-inc.com
-- GitHub: [littleahri](https://github.com/littleahri)
 
