@@ -17,6 +17,9 @@
 
 ### 指标收集功能
 http://127.0.0.1:8080/actuator/metrics
+- "gen_ai.client.operation",
+- "gen_ai.client.operation.active",
+- "gen_ai.client.token.usage",
 1. AI 模型调用次数统计
 2. AI 模型调用耗时统计
 3. 令牌使用量监控
@@ -71,7 +74,12 @@ curl http://127.0.0.1:8080/actuator/metrics
 
 机制：每个 HTTP 请求进入时 Brave 生成一个唯一 traceId；Spring AI 的 ai.client.operation span 与其共享同一 traceId，形成「HTTP 请求 → 模型调用」完整调用链，Zipkin UI 可查看各节点耗时分布。
 
+## 指标收集功能实现
+![image-token-usage](./docs/token-usage.png)
+
+## 分布式追踪功能实现
 ![image-zipkin-1](./docs/zipkin.png)
+
 
 
 
