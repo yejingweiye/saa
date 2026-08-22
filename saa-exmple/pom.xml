@@ -60,6 +60,7 @@
         <module>mcp</module>
         <module>graph</module>
         <module>nl2sql</module>
+        <module>multi-model</module>
 
     </modules>
 

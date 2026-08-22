@@ -22,3 +22,4 @@
 ## 15. 工作流-graph
 ## 16.  mcp
 ## 17. 自然语言转sql nl2sql
+## 18. 图、视、音多模态 multi-model
