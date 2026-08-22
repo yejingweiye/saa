@@ -20,8 +20,9 @@
     <name>Multi Model</name>
 
     <modules>
-        <module>openai-dashscope-multi-model</module>
         <module>dashscope-multi-model</module>
+        <module>openai-dashscope-multi-model</module>
+        <module>ark-multi-model</module>
     </modules>
 
     <build>
