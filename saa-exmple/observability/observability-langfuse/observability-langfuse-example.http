@@ -1,0 +1,5 @@
+# ImageModelController类的image方法
+GET http://localhost:8080/observability/image/generate
+
+### 简答
+GET http://localhost:8080/observability/chat

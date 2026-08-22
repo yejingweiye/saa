@@ -23,6 +23,7 @@
     <modules>
         <module>observability-example</module>
         <module>observability-arms</module>
+        <module>observability-langfuse</module>
     </modules>
 
     <build>

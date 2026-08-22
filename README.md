@@ -37,6 +37,7 @@ spring cloud Alibaba 基础复用框架
 ![image-token-usage](./docs/token-usage.png)
 
 ![image-zipkin-1](./docs/zipkin.png)
+![image-langfuse](./docs/langfuse.png)
 
 
 

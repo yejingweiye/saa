@@ -1,0 +1,26 @@
+<clickhouse>
+    <profiles>
+        <default>
+            <log_queries>0</log_queries>
+            <log_query_threads>0</log_query_threads>
+            <max_memory_usage>1500000000</max_memory_usage>
+            <max_memory_usage_for_all_queries>1200000000</max_memory_usage_for_all_queries>
+        </default>
+    </profiles>
+    <logger>
+        <level>warning</level>
+        <console>false</console>
+    </logger>
+    <!-- 关闭全部内部系统日志表 -->
+    <asynchronous_metric_log remove="1"/>
+    <backup_log remove="1"/>
+    <metric_log remove="1"/>
+    <query_thread_log remove="1"/>
+    <query_log remove="1"/>
+    <part_log remove="1"/>
+    <session_log remove="1"/>
+    <text_log remove="1"/>
+    <trace_log remove="1"/>
+    <opentelemetry_span_log remove="1"/>
+    <background_schedule_pool_log remove="1"/>
+</clickhouse>
