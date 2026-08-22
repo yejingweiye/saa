@@ -24,3 +24,4 @@
 ## 17. 自然语言转sql nl2sql
 ## 18. 多模态 multi-model
     dashscope-multi-model ：图、视、音
+## 19. 监控 observability

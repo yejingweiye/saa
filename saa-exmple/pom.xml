@@ -61,6 +61,7 @@
         <module>graph</module>
         <module>nl2sql</module>
         <module>multi-model</module>
+        <module>observability</module>
 
     </modules>
 

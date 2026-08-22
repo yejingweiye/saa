@@ -28,4 +28,8 @@ spring cloud Alibaba 基础复用框架
 ### saa-exmple>>mcp>>mcp-nacos 的 mcp 分布式
 <img src="./docs/mcp-nacos-manage.png" width="620"/>
 
+### saa-exmple>>nl2sql>>nl2sql-vector-management 的 nl2sql 向量管理
+<img src="./docs/init_schema.png" width="620"/>
+
+
 

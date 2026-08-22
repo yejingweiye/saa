@@ -1,6 +1,7 @@
 
 package com.yjw.mcp;
 
+import com.yjw.mcp.service.McpService;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.ai.tool.method.MethodToolCallbackProvider;
 import org.springframework.boot.SpringApplication;
