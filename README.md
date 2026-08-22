@@ -3,19 +3,21 @@
 基于springAI的【智能推荐客服系统】
 ### 页面
 #### 角色功能
-<img src="./docs/feature.png" width="620"/>
+![image-feature](./docs/feature.png)
 
 #### 内存记忆
-<img src="./docs/memory.png" width="620"/>
+![image-memory](./docs/memory.png)
+
 
 #### 课程推荐->知识库->课程查询工具->返回课程卡片
-<img src="./docs/recommend.png" width="620"/>
-<img src="./docs/recommending.png" width="620"/>
-<img src="./docs/recommended.png" width="620"/>
+![image-recommend](./docs/recommend.png)
+![image-recommending](./docs/recommending.png)
+![image-recommended](./docs/recommended.png)
 
 #### 预下单->订单工具->返回订单卡片
-<img src="./docs/presale.png" width="620"/>
-<img src="./docs/presaled.png" width="620"/>
+![image-presale](./docs/presale.png)
+
+![image-presaled](./docs/presaled.png)
 
 ## 2. saa-human-graph
 基于spring AI Alibaba graph 框架的【人工干预中断点工作流系统】
@@ -26,10 +28,10 @@ spring cloud Alibaba 基础复用框架
 ## 4.saa-exmple 
 基于 spring AI Alibaba 实现的各种exmple
 ### saa-exmple>>mcp>>mcp-nacos 的 mcp 分布式
-<img src="./docs/mcp-nacos-manage.png" width="620"/>
+![image-mcp-nacos-manage](./docs/mcp-nacos-manage.png)
 
 ### saa-exmple>>nl2sql>>nl2sql-vector-management 的 nl2sql 向量管理
-<img src="./docs/init_schema.png" width="620"/>
+![image-init_schema](./docs/init_schema.png)
 
 ### saa-exmple>>observability>>observability-example 的 observability 监控
 ![image-token-usage](./docs/token-usage.png)
