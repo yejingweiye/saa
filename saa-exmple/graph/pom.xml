@@ -25,6 +25,7 @@
 
         <module>big-tool</module>
         <module>mcp-node</module>
+        <module>graph-observability-langfuse</module>
     </modules>
 
     <build>

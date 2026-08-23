@@ -1,0 +1,8 @@
+# GraphStreamController类的testStream方法
+GET http://localhost:8080/graph/observation/test-stream
+
+### 同步图执行
+GET http://localhost:8080/graph/observation/execute?prompt=请分析这段文本：人工智能的发展
+
+### 流式图执行
+GET http://localhost:8080/graph/observation/stream?prompt=请分析这段文本：人工智能的发展&thread_id=demo
