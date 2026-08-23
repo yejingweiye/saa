@@ -67,6 +67,20 @@ public class StreamingChatNode implements NodeAction {
 
             // Create streaming chat response
             // 框架会自动将 Flux<ChatResponse> 转换为 StreamingOutput
+//            `Flux<ChatResponse>` 依次发出：`"我"` → `"爱"` → `"中国"`
+//            框架转换输出多笔 `StreamingOutput`：
+//            1. 第 1 个 StreamingOutput：`message.getText() = "我"`
+//            2. 第 2 个 StreamingOutput：`message.getText() = "我爱"`
+//            3. 第 3 个 StreamingOutput：`message.getText() = "我爱中国"`
+            /**
+             *                     ┌─► SSE 实时分片 → 浏览器 (打字机)
+             *   StreamingNode ── Flux<ChatResponse> ─┤
+             *                       └─► 流结束后聚合完整文本 → state.streaming_output → summary
+             *
+             *   - 给浏览器：每个 StreamingOutput 分片立刻推出去，所以浏览器逐字打印。
+             *   - 给 summary：框架把完整文本写进 streaming_output，summary 拿到完整结果做总结
+             *   这两条路是同时进行的。summary 还没跑完时，浏览器就已经把 streaming 的内容打完了。所以不存在"等总结完才到浏览器"
+             */
             // 构建AI流式调用，返回ChatResponse对象流
             Flux<ChatResponse> chatResponseFlux = chatClient
                     .prompt()                     // 构建一个新的Prompt请求对象

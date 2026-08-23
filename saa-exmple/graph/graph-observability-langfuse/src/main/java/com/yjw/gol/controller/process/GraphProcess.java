@@ -13,8 +13,6 @@ import org.springframework.http.codec.ServerSentEvent;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
 
-import java.util.Map;
-
 /**
  * 图流处理器
  * <p>
@@ -70,6 +68,32 @@ public class GraphProcess {
         return "";
     }
 
+    /**
+     * 将节点输出封装为 SSE 报文。
+     * 框架把所有真实节点都包成 StreamingOutput（普通节点 chunk 为 null），
+     * 需用 getOutputType() 的 *_STREAMING 区分真流式与节点完成；虚拟节点是普通 NodeOutput。
+     */
+    private String buildNodeContent(NodeOutput output) {
+        if (output instanceof StreamingOutput streamingOutput) {
+            boolean isStreaming = streamingOutput.getOutputType() != null
+                    && streamingOutput.getOutputType().name().endsWith("_STREAMING");
+            if (isStreaming) {
+                JSONObject streamOutput = new JSONObject();
+                streamOutput.put("type", "streaming");
+                streamOutput.put("node", output.node());
+                streamOutput.put("chunk", resolveStreamingChunk(streamingOutput));
+                streamOutput.put("timestamp", System.currentTimeMillis());
+                return JSON.toJSONString(streamOutput);
+            }
+        }
+        JSONObject nodeOutput = new JSONObject();
+        nodeOutput.put("type", "node_output");
+        nodeOutput.put("node", output.node());
+        nodeOutput.put("data", output.state().data());
+        nodeOutput.put("timestamp", System.currentTimeMillis());
+        return JSON.toJSONString(nodeOutput);
+    }
+
     public Flux<ServerSentEvent<String>> processStream(AsyncGenerator<NodeOutput> generator) {
         return Flux.create(sink -> processNext(generator, sink));
     }
@@ -93,22 +117,7 @@ public class GraphProcess {
                             output != null ? output.getClass().getName() : null,
                             output);
 
-                    String content;
-                    if (output instanceof StreamingOutput streamingOutput) { // 流式分片输出，封装json字符串
-                        JSONObject streamOutput = new JSONObject();
-                        streamOutput.put("type", "streaming");
-                        streamOutput.put("node", output.node());
-                        streamOutput.put("chunk", resolveStreamingChunk(streamingOutput));
-                        streamOutput.put("timestamp", System.currentTimeMillis());
-                        content = JSON.toJSONString(streamOutput);
-                    } else {
-                        JSONObject nodeOutput = new JSONObject();
-                        nodeOutput.put("type", "node_output");
-                        nodeOutput.put("node", output.node());
-                        nodeOutput.put("data", output.state().data());
-                        nodeOutput.put("timestamp", System.currentTimeMillis());
-                        content = JSON.toJSONString(nodeOutput);
-                    }
+                    String content = buildNodeContent(output);
 
                     logger.debug("processNext: 发送SSE事件，节点：{}",
                             output != null ? output.node() : null);
@@ -202,31 +211,7 @@ public class GraphProcess {
                         output != null ? output.getClass().getName() : null,
                         output);
 
-                String content;
-
-//                bug
-//                if (output instanceof StreamingOutput streamingOutput) { // 流式分片输出，封装json字符串
-//                    content = JSON.toJSONString(Map.of(
-//                            "type", "streaming",
-//                            "node", output.node(),
-//                            "chunk", streamingOutput.chunk(),
-//                            "timestamp", System.currentTimeMillis()
-//                    ));
-                if (output instanceof StreamingOutput streamingOutput) {
-                    JSONObject streamOutput = new JSONObject();
-                    streamOutput.put("type", "streaming");
-                    streamOutput.put("node", output.node());
-                    streamOutput.put("chunk", resolveStreamingChunk(streamingOutput));
-                    streamOutput.put("timestamp", System.currentTimeMillis());
-                    content = JSON.toJSONString(streamOutput);
-                } else {
-                    JSONObject nodeOutput = new JSONObject();
-                    nodeOutput.put("type", "node_output");
-                    nodeOutput.put("node", output.node());
-                    nodeOutput.put("data", output.state().data());
-                    nodeOutput.put("timestamp", System.currentTimeMillis());
-                    content = JSON.toJSONString(nodeOutput);
-                }
+                String content = buildNodeContent(output);
 
                 logger.debug("processNext: 向客户端发送SSE事件，节点：{}", output != null ? output.node() : null);
 
