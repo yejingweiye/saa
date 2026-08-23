@@ -20,6 +20,8 @@
     module-rag：用户问题优化和检索知识库优化
     rag-etl-pipeline： RAG链路全流程
 ## 15. 工作流-graph
+    graph-observability-langfuse: 并行、嵌套子图、langfuse图运行监控    
+
 ## 16.  mcp
 ## 17. 自然语言转sql nl2sql
 ## 18. 多模态 multi-model

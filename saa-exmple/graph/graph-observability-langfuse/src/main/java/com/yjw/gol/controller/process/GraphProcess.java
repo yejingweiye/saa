@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ai.chat.messages.Message;
 import org.springframework.http.codec.ServerSentEvent;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
@@ -47,6 +48,28 @@ public class GraphProcess {
      * @param generator 图异步输出生成器，提供各个节点输出数据
      * @return SSE事件的Flux数据流
      */
+    /**
+     * 解析流式分片文本。
+     * <p>
+     * 框架构造的 StreamingOutput 并不保证 chunk 非空：当流式分片只携带
+     * finish_reason / tool call / 空 delta 时，chunk 可能为 null。
+     * 这里依次回退到 message().getText()，最后兜底为空字符串，避免 Map 序列化空值报错。
+     *
+     * @param streamingOutput 流式分片输出
+     * @return 分片文本，永不为 null
+     */
+    private String resolveStreamingChunk(StreamingOutput<?> streamingOutput) {
+        String chunk = streamingOutput.chunk();
+        if (chunk != null) {
+            return chunk;
+        }
+        Message message = streamingOutput.message();
+        if (message != null && message.getText() != null) {
+            return message.getText();
+        }
+        return "";
+    }
+
     public Flux<ServerSentEvent<String>> processStream(AsyncGenerator<NodeOutput> generator) {
         return Flux.create(sink -> processNext(generator, sink));
     }
@@ -72,12 +95,12 @@ public class GraphProcess {
 
                     String content;
                     if (output instanceof StreamingOutput streamingOutput) { // 流式分片输出，封装json字符串
-                        content = JSON.toJSONString(Map.of(
-                                "type", "streaming",
-                                "node", output.node(),
-                                "chunk", streamingOutput.chunk(),
-                                "timestamp", System.currentTimeMillis()
-                        ));
+                        JSONObject streamOutput = new JSONObject();
+                        streamOutput.put("type", "streaming");
+                        streamOutput.put("node", output.node());
+                        streamOutput.put("chunk", resolveStreamingChunk(streamingOutput));
+                        streamOutput.put("timestamp", System.currentTimeMillis());
+                        content = JSON.toJSONString(streamOutput);
                     } else {
                         JSONObject nodeOutput = new JSONObject();
                         nodeOutput.put("type", "node_output");
@@ -180,12 +203,22 @@ public class GraphProcess {
                         output);
 
                 String content;
+
+//                bug
+//                if (output instanceof StreamingOutput streamingOutput) { // 流式分片输出，封装json字符串
+//                    content = JSON.toJSONString(Map.of(
+//                            "type", "streaming",
+//                            "node", output.node(),
+//                            "chunk", streamingOutput.chunk(),
+//                            "timestamp", System.currentTimeMillis()
+//                    ));
                 if (output instanceof StreamingOutput streamingOutput) {
-                    content = JSON.toJSONString(Map.of(
-                            "type", "streaming",
-                            "node", output.node(),
-                            "chunk", streamingOutput.chunk(),
-                            "timestamp", System.currentTimeMillis()));
+                    JSONObject streamOutput = new JSONObject();
+                    streamOutput.put("type", "streaming");
+                    streamOutput.put("node", output.node());
+                    streamOutput.put("chunk", resolveStreamingChunk(streamingOutput));
+                    streamOutput.put("timestamp", System.currentTimeMillis());
+                    content = JSON.toJSONString(streamOutput);
                 } else {
                     JSONObject nodeOutput = new JSONObject();
                     nodeOutput.put("type", "node_output");
