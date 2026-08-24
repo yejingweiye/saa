@@ -1,0 +1,5 @@
+### chat
+GET http://localhost:8080/custom/observation/chat
+
+###
+GET http://127.0.0.1:8080/actuator/prometheus

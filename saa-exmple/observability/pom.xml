@@ -24,6 +24,7 @@
         <module>observability-example</module>
         <module>observability-arms</module>
         <module>observability-langfuse</module>
+        <module>observationhandler</module>
     </modules>
 
     <build>
