@@ -27,6 +27,7 @@
         <module>mcp-node</module>
         <module>graph-observability-langfuse</module>
         <module>reflection</module>
+        <module>react</module>
     </modules>
 
     <build>

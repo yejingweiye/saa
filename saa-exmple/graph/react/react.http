@@ -1,0 +1,8 @@
+# ReactController类的simpleChat方法
+GET http://localhost:8080/react/chat?query=杭州今天天气怎么样
+
+###
+GET http://localhost:8080/react/chat?query=是的
+
+###
+GET http://localhost:8080/react/chat?query=你好，请介绍一下你自己
