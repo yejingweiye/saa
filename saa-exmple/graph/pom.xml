@@ -30,6 +30,7 @@
         <module>react</module>
         <module>chatflow</module>
         <module>workflow-review-classifier</module>
+        <module>product-analysis-graph</module>
     </modules>
 
     <build>

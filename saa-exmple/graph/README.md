@@ -13,3 +13,6 @@ start->intent->chat/callSubGraph->mainReply->end
 2.消极
 消极反馈->第一级分类节点->第二级分类节点->http 消极节点处理
 ```
+
+## product-analysis-graph 产品分析图
+输入产品信息->并行产生营销广告和挑出产品规格->合并json输出
