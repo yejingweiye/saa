@@ -58,8 +58,8 @@ public class GraphBuilder {
 
         // 调用负向http接口
         HttpNode httpNegative = HttpNode.builder()
-                .url("http://127.0.0.1:8080/negative")
-                .header("Content‑Type", "application/json")
+                .url("http://127.0.0.1:18080/negative")
+                .header("Content-Type", "application/json")
                 .retryConfig(new HttpNode.RetryConfig(3, 100, true))
                 .outputKey("http_negative_output")
                 .build();
@@ -67,8 +67,8 @@ public class GraphBuilder {
 
         // 调用正向http接口
         HttpNode httpPositive = HttpNode.builder()
-                .url("http://127.0.0.1:8080/positive")
-                .header("Content‑Type", "application/json")
+                .url("http://127.0.0.1:18080/positive")
+                .header("Content-Type", "application/json")
                 .retryConfig(new HttpNode.RetryConfig(3, 100, true))
                 .outputKey("http_positive_output")
                 .build();
