@@ -28,6 +28,7 @@
         <module>graph-observability-langfuse</module>
         <module>reflection</module>
         <module>react</module>
+        <module>chatflow</module>
     </modules>
 
     <build>
