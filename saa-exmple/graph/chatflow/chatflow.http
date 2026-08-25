@@ -1,2 +1,6 @@
 # TodoChatflowController类的chat方法
 POST http://localhost:8080/assistant/chat?sessionId=yjw&userInput=创造200字有关小猫吃鱼故事
+
+### 创建代办
+POST http://localhost:8080/assistant/chat?sessionId=yjw&userInput=创建待办:明天下午3点去开会
+

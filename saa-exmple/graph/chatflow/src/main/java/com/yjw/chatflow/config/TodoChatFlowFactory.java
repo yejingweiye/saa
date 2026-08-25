@@ -65,22 +65,29 @@ public class TodoChatFlowFactory {
         mainGraph.addNode("intent", node_async(intentClassifier));
 
         // 调用子图节点
+//        子图和主图是两套独立 state！子图内部的变量不会自动合并到主图，必须手动拿出来，再 return 写回主图 state
         NodeAction callSubGraphNode = (OverAllState state) -> {
             String mainThreadId = (String) state.value("session_id").orElse("user-001");
             String subThreadId = mainThreadId + "-todo-" + UUID.randomUUID();
             String userInput = (String) state.value("user_input").orElse("");
             // 提取待办内容
+            //3.解析提取待办内容：比如输入“创建待办：晚上买菜”，截取冒号后面部分
             String taskContent = userInput;
             int idx = userInput.indexOf("：");
             if (idx > 0 && idx + 1 < userInput.length()) {
                 taskContent = userInput.substring(idx + 1).trim();
             }
+
+            //4.组装子图的输入参数：子图需要 task_content
             Map<String, Object> input = Map.of("task_content", taskContent);
-            // 传入subThreadId
+            //5.执行子图 invoke，传入输入，传入独立subThreadId
             var subResult = subGraph.invoke(input, RunnableConfig.builder().threadId(subThreadId).build());
+            //6.子图执行成功，解析子图返回的state
             if (subResult.isPresent()) {
+                //取出子图输出 created_task
                 Object createdTaskObj = subResult.get().value("created_task").orElse(null);
                 String createdTask = null;
+                //兼容多种返回类型：字符串 / AssistantMessage对象
                 if (createdTaskObj instanceof String s) {
                     createdTask = s;
                 }else if (createdTaskObj instanceof AssistantMessage am) {
@@ -88,17 +95,21 @@ public class TodoChatFlowFactory {
                 }else if (createdTaskObj != null) {
                     createdTask = createdTaskObj.toString();
                 }
+
+                //7.读取主图state里的tasks列表，复制一份（避免修改原state）
                 List<String> tasks = (List<String>) state.value("tasks").orElse(new java.util.ArrayList<>());
                 tasks = new java.util.ArrayList<>(tasks);
 
+                //8.把新生成的待办加入tasks列表
                 if (createdTask != null && !createdTask.isBlank()) {
                     tasks.add(createdTask);
                 }
+
+                //返回，更新主图state：tasks列表更新，同时带上created_task
                 return Map.of("tasks", tasks, "created_task", createdTask);
 
             }
             return Map.of();
-
 
         };
 

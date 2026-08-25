@@ -97,7 +97,6 @@ curl "http://localhost:8080/graph/observation/graph/observation"
 
 ---
 
-*此 README.md 由自动化工具生成于 2025-12-11 00:51:03*
 ## 模块说明
 本示例演示了如何将 Spring AI Alibaba Graph 与 Langfuse 集成，实现 AI 图应用的全面可观测性和监控。。
 
