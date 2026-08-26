@@ -1,0 +1,34 @@
+###
+GET http://localhost:18080/manus/chat?query=帮我查询阿里巴巴近一周的股票信息
+
+{
+  "command" : "create",
+  "plan_id" : "1",
+  "title" : "查询阿里巴巴近一周的股票信息",
+  "steps" : [
+  "打开金融数据网站，例如新浪财经或者雅虎财经",
+   "在搜索框中输入'阿里巴巴'并选择正确的企业条目",
+   "定位到历史价格或股价页面",
+    "筛选出最近一周的股票交易记录",
+     "整理收集到的数据准备呈现给用户"
+     ]
+}
+
+### OpenmanusController类的simpleChat方法
+GET http://localhost:18080/manus/chat
+
+###
+# OpenmanusHumanController类的initGraph方法
+GET http://localhost:18080/manus/human/init
+
+###
+# OpenmanusHumanController类的simpleChat方法
+GET http://localhost:18080/manus/human/chat
+
+###
+# OpenmanusHumanController类的resume方法
+GET http://localhost:18080/manus/human/resume
+
+###
+# OpenmanusHumanController类的resumeToNextStep方法
+GET http://localhost:18080/manus/human/resume-to-next-step

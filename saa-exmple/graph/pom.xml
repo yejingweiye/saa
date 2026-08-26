@@ -31,6 +31,7 @@
         <module>chatflow</module>
         <module>workflow-review-classifier</module>
         <module>product-analysis-graph</module>
+        <module>multiagent-openmanus</module>
     </modules>
 
     <build>
