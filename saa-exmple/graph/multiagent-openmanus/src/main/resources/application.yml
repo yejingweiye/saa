@@ -37,7 +37,7 @@ spring:
       api-key: ${AI_DASHSCOPE_API_KEY}
       chat:
         options:
-          model: qwen-max
+          model: qwen-plus-latest
       embedding:
         options:
           model: text-embedding-v1

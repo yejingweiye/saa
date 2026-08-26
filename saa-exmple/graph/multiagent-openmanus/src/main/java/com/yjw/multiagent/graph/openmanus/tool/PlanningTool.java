@@ -20,6 +20,7 @@ public class PlanningTool implements BiFunction<String, ToolContext, String> {
 
 	private static final Logger log = LoggerFactory.getLogger(PlanningTool.class);
 
+    // 给大模型调用工具显式说明人参数的JSON Schema
     public static final String PARAMETERS = """
        {
            "type": "object",
@@ -111,6 +112,14 @@ public class PlanningTool implements BiFunction<String, ToolContext, String> {
      *      ]
      * }
      */
+    /**
+     * {
+     *   "command" : "mark_step",
+     *   "plan_id" : "1",
+     *   "step_index" : 0,
+     *   "step_status" : "in_progress"
+     * }
+     */
 	public String run(String toolInput, ToolContext context) {
 		try {
 			log.info("PlanningTool toolInput:{}", toolInput);
@@ -152,6 +161,7 @@ public class PlanningTool implements BiFunction<String, ToolContext, String> {
 			switch (command) {
 				case "create":
 					return createPlan(planId, title, steps, context);
+
 				default:
 					throw new RuntimeException("Unrecognized command: " + command
 							+ ". Allowed commands are: create, update, list, get, set_active, mark_step, delete");

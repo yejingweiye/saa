@@ -8,11 +8,11 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.yjw.multiagent.graph","com.alibaba.cloud.ai" })
-public class GraphApplication {
+public class OpenmanusGraphApplication {
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(GraphApplication.class, args);
+		SpringApplication.run(OpenmanusGraphApplication.class, args);
 	}
 
 }

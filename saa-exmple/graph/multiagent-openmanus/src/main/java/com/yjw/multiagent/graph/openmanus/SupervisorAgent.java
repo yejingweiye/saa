@@ -31,6 +31,20 @@ public class SupervisorAgent implements NodeAction {
      * @return 更新后的状态键 {@code step_prompt}（下一步提示词）
      * @throws Exception 状态读取或计划解析失败时抛出
      */
+    /**
+     * OverAllState{data={input=帮我查询阿里巴巴近一周的股票信息, plan=```json
+     * {
+     * 	"planId": "G_47c34bd7-d9c6-4267-8cc2-3644142427c1",
+     * 	"steps": [
+     * 		"1. 查找可靠的金融数据来源（例如雅虎财经、东方财富网等）",
+     * 		"2. 访问该网站并搜索阿里巴巴（股票代码：BABA 或 09988.HK）",
+     * 		"3. 定位并提取近七天的股价数据（开盘价、收盘价、最高价、最低价、成交量）",
+     * 		"4. 整理数据为结构化格式（如表格或JSON）",
+     * 		"5. 输出结果供用户查看"
+     * 	]
+     * }
+     * ```}, resume=false, humanFeedback=null, interruptMessage='null'}
+     */
     @Override
     public Map<String, Object> apply(OverAllState t) throws Exception {
 

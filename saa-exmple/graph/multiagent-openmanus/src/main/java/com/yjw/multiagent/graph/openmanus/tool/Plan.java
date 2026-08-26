@@ -8,76 +8,76 @@ import java.util.Map;
 
 public class Plan {
 
-	private Map<String, String> stepStatus;
+    private Map<String, String> stepStatus;
 
-	private int currentStep = 0;
+    private int currentStep = 0;
 
-	private String task;
+    private String task;
 
-	private String plan_id;
+    private String plan_id;
 
-	private List<String> steps;
+    private List<String> steps;
 
-	public Plan(String task, String planId, List<String> steps) {
-		this.task = task;
-		this.plan_id = planId;
-		this.steps = steps;
-		this.stepStatus = new HashMap<>();
-	}
+    public Plan(String task, String planId, List<String> steps) {
+        this.task = task;
+        this.plan_id = planId;
+        this.steps = steps;
+        this.stepStatus = new HashMap<>();
+    }
 
-	public String getCurrentStep() {
-		return String.valueOf(currentStep);
-	}
+    public String getCurrentStep() {
+        return String.valueOf(currentStep);
+    }
 
-	public String getPlan_id() {
-		return plan_id;
-	}
+    public String getPlan_id() {
+        return plan_id;
+    }
 
-	public void updateStepStatus(String stepIndex, String status) {
-		stepStatus.put(stepIndex, status);
-	}
+    public void updateStepStatus(String stepIndex, String status) {
+        stepStatus.put(stepIndex, status);
+    }
 
-	public String nextStepPrompt() {
-		String nextStepDescription = steps.get(currentStep);
-		Map<String, Object> context = new HashMap<>();
-		context.put("task", task);
-		context.put("planWithSteps", steps);
-		context.put("stepIndex", currentStep);
-		context.put("nextStepDescription", nextStepDescription);
-		context.put("stepStatus", stepStatus);
+    public String nextStepPrompt() {
+        String nextStepDescription = steps.get(currentStep);
+        Map<String, Object> context = new HashMap<>();
+        context.put("task", task);
+        context.put("planWithSteps", steps);
+        context.put("stepIndex", currentStep);
+        context.put("nextStepDescription", nextStepDescription);
+        context.put("stepStatus", stepStatus);
 
-		currentStep++;
+        currentStep++;
 
-		String template = """
-				The task is: {task}
+        String template = """
+                任务：{task}
+                
+                请按照下面这份计划，依据顺序步骤完成该任务：
+                {planWithSteps}
+                
+                你当前执行到计划的第 {stepIndex} 步，步骤内容：{nextStepDescription}。
+                
+                以下为前面步骤的执行结果，可作为上下文辅助你完成当前步骤：
+                {stepStatus}
+                """;
 
-				You are asked to follow the following plan with specific sequential steps to complete this task:
-				{planWithSteps}
+        PromptTemplate promptTemplate = new PromptTemplate(template);
+        return promptTemplate.render(context);
+    }
 
-				You are currently at step {stepIndex} of the plan, which is: {nextStepDescription}.
+    public String nextStep() {
+        return steps.get(currentStep++);
+    }
 
-				Below are the result of the previous steps, which you can use as the context to help you complete the current step:
-				  {stepStatus}
+    public boolean isFinished() {
+        return currentStep == steps.size();
+    }
 
-				""";
-		PromptTemplate promptTemplate = new PromptTemplate(template);
-		return promptTemplate.render(context);
-	}
+    void setPlan_id(String planId) {
+        this.plan_id = planId;
+    }
 
-	public String nextStep() {
-		return steps.get(currentStep++);
-	}
-
-	public boolean isFinished() {
-		return currentStep == steps.size();
-	}
-
-	void setPlan_id(String planId) {
-		this.plan_id = planId;
-	}
-
-	void setSteps(List<String> steps) {
-		this.steps = steps;
-	}
+    void setSteps(List<String> steps) {
+        this.steps = steps;
+    }
 
 }
