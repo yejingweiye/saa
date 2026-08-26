@@ -24,31 +24,32 @@ public class GoogleSearch implements BiFunction<String, ToolContext, ToolExecute
 
 	private SerpApiService service;
 
-	public static final String PARAMETERS = """
-			{
-			    "type": "object",
-			    "properties": {
-			        "query": {
-			            "type": "string",
-			            "description": "(required) The search query to submit to Google."
-			        },
-			        "num_results": {
-			            "type": "integer",
-			            "description": "(optional) The number of search results to return. Default is 10.",
-			            "default": 10
-			        }
-			    },
-			    "required": ["query"]
-			}
-			""";
+    public static final String PARAMETERS = """
+        {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "（必填）提交给搜索引擎的搜索关键词"
+                },
+                "num_results": {
+                    "type": "integer",
+                    "description": "（选填）需要返回的搜索结果数量，默认值为10",
+                    "default": 10
+                }
+            },
+            "required": ["query"]
+        }
+        """;
 
-	private static final String name = "google_search";
+    private static final String name = "google_search";
 
-	public static final String description = """
-			Perform a Google search and return a list of relevant links.
-			Use this tool when you need to find information on the web, get up-to-date data, or research specific topics.
-			The tool returns a list of URLs that match the search query.
-			""";
+    public static final String description = """
+        执行网页搜索并返回相关链接列表。
+        当你需要联网查找资料、获取最新信息或者调研特定主题时，请使用本工具。
+        该工具会返回匹配搜索关键词的一组网页链接。
+        """;
+
 
 	public static OpenAiApi.FunctionTool getToolDefinition() {
 		OpenAiApi.FunctionTool.Function function = new OpenAiApi.FunctionTool.Function(description, name, PARAMETERS);

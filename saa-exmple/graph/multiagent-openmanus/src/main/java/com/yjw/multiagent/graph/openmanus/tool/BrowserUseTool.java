@@ -24,6 +24,16 @@ public class BrowserUseTool implements Function<String, ToolExecuteResult> {
 
 	private static final int MAX_LENGTH = 3000;
 
+	private static final List<String> BOT_BLOCK_KEYWORDS = List.of(
+			"我们的系统检测到您的计算机网络中存在异常流量",
+			"安全验证", "访问异常", "检测到异常流量", "请完成验证", "滑动验证",
+			"验证码", "captcha", "access denied", "request blocked");
+
+	private static final String BOT_BLOCKED_MESSAGE = """
+			目标网站返回了反爬验证页，页面文本无法直接读取。
+			不要反复刷新重试同一个页面。建议：换用其它数据源/网站，或用 get_html 分析页面结构、execute_js 提取内容。
+			""";
+
 	public static final String PARAMETERS = """
 			{
 			    "type": "object",
@@ -143,14 +153,38 @@ public class BrowserUseTool implements Function<String, ToolExecuteResult> {
 
 	public BrowserUseTool() {
 		ChromeOptions options = new ChromeOptions();
+		options.setPageLoadStrategy(PageLoadStrategy.EAGER);
 		options.addArguments("--remote-allow-origins=*");
-		// options.setPageLoadStrategy(PageLoadStrategy.EAGER);
-		// options.addArguments("--headless");
-		// options.addArguments("--incognito");
-		// options.addArguments("--no-sandbox");
-		// options.addArguments("--disable-extensions");
-		// options.addArguments("--start-maximized");
+		options.addArguments("--disable-blink-features=AutomationControlled");
+		options.addArguments("--disable-infobars");
+		options.addArguments("--no-sandbox");
+		options.addArguments("--disable-dev-shm-usage");
+		options.addArguments("--disable-extensions");
+		options.addArguments("--start-maximized");
+		options.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
+		options.setExperimentalOption("useAutomationExtension", false);
 		driver = new ChromeDriver(options);
+		hideWebDriverFlag();
+	}
+
+	/**
+	 * 通过 CDP 在每个新文档加载前注入脚本，隐藏 navigator.webdriver 自动化指纹，降低被反爬识别的概率。
+	 */
+	private void hideWebDriverFlag() {
+		try {
+			((ChromeDriver) driver).executeCdpCommand("Page.addScriptToEvaluateOnNewDocument",
+					Map.of("source", "Object.defineProperty(navigator, 'webdriver', { get: () => undefined });"));
+		}
+		catch (Exception ignored) {
+			// CDP 注入失败不影响主流程
+		}
+	}
+
+	private boolean isBotBlocked(String text) {
+		if (text == null || text.isEmpty()) {
+			return false;
+		}
+		return BOT_BLOCK_KEYWORDS.stream().anyMatch(text::contains);
 	}
 
 	public ToolExecuteResult run(String toolInput) {
@@ -235,18 +269,15 @@ public class BrowserUseTool implements Function<String, ToolExecuteResult> {
 							html.length() > MAX_LENGTH ? html.substring(0, MAX_LENGTH) + "..." : html);
 
 				case "get_text":
-					int counter = 0;
 					String body = driver.findElement(By.tagName("body")).getText();
 					log.info("get_text body is {}", body);
-					if (body != null && body.contains("我们的系统检测到您的计算机网络中存在异常流量")) {
-						while (counter++ < 5) {
-							Thread.sleep(10000);
-							body = driver.findElement(By.tagName("body")).getText();
-							log.info("retry {} get_text body is {}", counter, body);
-							if (body != null && body.contains("我们的系统检测到您的计算机网络中存在异常流量")) {
-								continue;
-							}
-							return new ToolExecuteResult(body);
+					if (isBotBlocked(body)) {
+						// 反爬拦截：刷新一次，仍被拦截则明确告知 LLM，避免长时间阻塞和死循环
+						driver.navigate().refresh();
+						body = driver.findElement(By.tagName("body")).getText();
+						log.info("after refresh get_text body is {}", body);
+						if (isBotBlocked(body)) {
+							return new ToolExecuteResult(BOT_BLOCKED_MESSAGE);
 						}
 					}
 					return new ToolExecuteResult(body);

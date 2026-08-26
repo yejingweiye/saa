@@ -28,26 +28,27 @@ public class PythonExecute implements BiFunction<String, ToolContext, ToolExecut
 
 	public static final String LLMMATH_PYTHON_CODE = "import sys; import math; import numpy as np; import numexpr as ne; input = '%s'; res = ne.evaluate(input); print(res)";
 
-	public static final String PARAMETERS = """
-			{
-			    "type": "object",
-			    "properties": {
-			        "code": {
-			            "type": "string",
-			            "description": "The Python code to execute."
-			        }
-			    },
-			    "required": ["code"]
-			}
-			""";
+    public static final String PARAMETERS = """
+        {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "description": "待执行的Python代码"
+                }
+            },
+            "required": ["code"]
+        }
+        """;
 
-	private static final String name = "python_execute";
+    private static final String name = "python_execute";
 
-	public static final String description = """
-			Executes Python code string. Note: Only print outputs are visible, function return values are not captured. Use print statements to see results.
-			""";
+    public static final String description = """
+        执行Python代码字符串。注意：仅print打印输出内容可见，函数返回值不会被捕获，请使用print语句输出运行结果。
+        """;
 
-	public static OpenAiApi.FunctionTool getToolDefinition() {
+
+    public static OpenAiApi.FunctionTool getToolDefinition() {
 		OpenAiApi.FunctionTool.Function function = new OpenAiApi.FunctionTool.Function(description, name, PARAMETERS);
 		OpenAiApi.FunctionTool functionTool = new OpenAiApi.FunctionTool(function);
 		return functionTool;

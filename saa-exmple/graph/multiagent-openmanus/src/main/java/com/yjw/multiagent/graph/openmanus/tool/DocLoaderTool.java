@@ -20,79 +20,78 @@ import java.util.stream.Collectors;
 
 public class DocLoaderTool implements Function<String, ToolExecuteResult> {
 
-	private static final Logger log = LoggerFactory.getLogger(DocLoaderTool.class);
+    private static final Logger log = LoggerFactory.getLogger(DocLoaderTool.class);
 
-	private static final String PARAMETERS = """
-			{
-			    "type": "object",
-			    "properties": {
-			        "file_type": {
-			            "type": "string",
-			            "description": "(required) File type, such as pdf, docx, xlsx, csv, etc.."
-			        },
-			        "file_path": {
-			            "type": "string",
-			            "description": "(required) Get the absolute path of the file from the user request."
-			        }
-			    },
-			    "required": ["file_type","file_path"]
-			}
-			""";
+    private static final String PARAMETERS = """
+            {
+                "type": "object",
+                "properties": {
+                    "file_type": {
+                        "type": "string",
+                        "description": "（必填）文件类型，例如 pdf、docx、xlsx、csv 等"
+                    },
+                    "file_path": {
+                        "type": "string",
+                        "description": "（必填）从用户请求中获取文件的绝对路径"
+                    }
+                },
+                "required": ["file_type","file_path"]
+            }
+            """;
 
-	private static final String name = "doc_loader";
+    private static final String name = "doc_loader";
 
-	private static final String description = """
-			Get the content information of a local file at a specified path.
-			Use this tool when you want to get some related information asked by the user.
-			This tool accepts the file path and gets the related information content.
-			""";
+    private static final String description = """
+            获取指定路径下本地文件的内容信息。
+            当你需要获取用户询问的相关文件信息时，请使用该工具。
+            该工具接收文件路径，并读取返回对应的文件内容信息。
+            """;
 
-	public static OpenAiApi.FunctionTool getToolDefinition() {
-		OpenAiApi.FunctionTool.Function function = new OpenAiApi.FunctionTool.Function(description, name, PARAMETERS);
-		OpenAiApi.FunctionTool functionTool = new OpenAiApi.FunctionTool(function);
-		return functionTool;
-	}
 
-	public static FunctionToolCallback getFunctionToolCallback() {
-		return FunctionToolCallback.builder(name, new BrowserUseTool())
-			.description(description)
-			.inputSchema(PARAMETERS)
-			.inputType(String.class)
-			.build();
-	}
+    public static OpenAiApi.FunctionTool getToolDefinition() {
+        OpenAiApi.FunctionTool.Function function = new OpenAiApi.FunctionTool.Function(description, name, PARAMETERS);
+        OpenAiApi.FunctionTool functionTool = new OpenAiApi.FunctionTool(function);
+        return functionTool;
+    }
 
-	public DocLoaderTool() {
-	}
+    public static FunctionToolCallback getFunctionToolCallback() {
+        return FunctionToolCallback.builder(name, new BrowserUseTool())
+                .description(description)
+                .inputSchema(PARAMETERS)
+                .inputType(String.class)
+                .build();
+    }
 
-	public ToolExecuteResult run(String toolInput) {
-		log.info("DocLoaderTool toolInput:{}", toolInput);
-		try {
-			Map<String, Object> toolInputMap = JSON.parseObject(toolInput, new TypeReference<Map<String, Object>>() {
-			});
-			String fileType = (String) toolInputMap.get("file_type");
-			String filePath = (String) toolInputMap.get("file_path");
-			TikaDocumentParser parser = new TikaDocumentParser();
-			List<Document> documentList = parser.parse(new FileInputStream(filePath));
-			List<String> documentContents = documentList.stream()
-				.map(document -> document.getFormattedContent())
-				.collect(Collectors.toList());
+    public DocLoaderTool() {
+    }
 
-			String documentContentStr = String.join("\n", documentContents);
-			if (StringUtils.isEmpty(documentContentStr)) {
-				return new ToolExecuteResult("No Related information");
-			}
-			else {
-				return new ToolExecuteResult("Related information: " + documentContentStr);
-			}
-		}
-		catch (Throwable e) {
-			return new ToolExecuteResult("Error get Related information: " + e.getMessage());
-		}
-	}
+    public ToolExecuteResult run(String toolInput) {
+        log.info("DocLoaderTool toolInput:{}", toolInput);
+        try {
+            Map<String, Object> toolInputMap = JSON.parseObject(toolInput, new TypeReference<Map<String, Object>>() {
+            });
+            String fileType = (String) toolInputMap.get("file_type");
+            String filePath = (String) toolInputMap.get("file_path");
+            TikaDocumentParser parser = new TikaDocumentParser();
+            List<Document> documentList = parser.parse(new FileInputStream(filePath));
+            List<String> documentContents = documentList.stream()
+                    .map(document -> document.getFormattedContent())
+                    .collect(Collectors.toList());
 
-	@Override
-	public ToolExecuteResult apply(@ToolParam(description = PARAMETERS) String s) {
-		return run(s);
-	}
+            String documentContentStr = String.join("\n", documentContents);
+            if (StringUtils.isEmpty(documentContentStr)) {
+                return new ToolExecuteResult("No Related information");
+            } else {
+                return new ToolExecuteResult("Related information: " + documentContentStr);
+            }
+        } catch (Throwable e) {
+            return new ToolExecuteResult("Error get Related information: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public ToolExecuteResult apply(@ToolParam(description = PARAMETERS) String s) {
+        return run(s);
+    }
 
 }

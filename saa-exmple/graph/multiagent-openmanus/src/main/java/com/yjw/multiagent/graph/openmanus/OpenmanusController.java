@@ -71,10 +71,10 @@ public class OpenmanusController {
 
         // 思考 → 调用工具 → 获取结果，算作一轮迭代
         ReactAgent planningAgent = new ReactAgent("planningAgent", planningClient, Builder.getFunctionCallbackList(), 10);
-        planningAgent.getAndCompileGraph();
+        planningAgent.getAndCompileGraph().setMaxIterations(100);
 
         ReactAgent stepAgent = new ReactAgent("stepAgent", stepClient, Builder.getManusAgentFunctionCallbacks(), 10);
-        stepAgent.getAndCompileGraph();
+        stepAgent.getAndCompileGraph().setMaxIterations(100);
 
         StateGraph graph = new StateGraph(stateFactory)
                 .addNode("planning_agent", planningAgent.asAsyncNodeAction("input", "plan"))
@@ -88,6 +88,7 @@ public class OpenmanusController {
                 .addEdge("step_executing_agent", "supervisor_agent");
 
         this.compiledGraph = graph.compile();
+        this.compiledGraph.setMaxIterations(100);
 
         GraphRepresentation graphRepresentation = compiledGraph.getGraph(GraphRepresentation.Type.PLANTUML);
         System.out.println("\n\n");

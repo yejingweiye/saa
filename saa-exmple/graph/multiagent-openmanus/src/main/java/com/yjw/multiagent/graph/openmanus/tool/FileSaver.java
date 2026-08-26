@@ -18,77 +18,75 @@ import java.util.function.Function;
 
 public class FileSaver implements Function<String, ToolExecuteResult> {
 
-	private static final Logger log = LoggerFactory.getLogger(FileSaver.class);
+    private static final Logger log = LoggerFactory.getLogger(FileSaver.class);
 
-	private static final String PARAMETERS = """
-			{
-			    "type": "object",
-			    "properties": {
-			        "content": {
-			            "description": "(required) The content to save to the file.",
-			            "type": "string"
-			        },
-			        "file_path": {
-			            "description": "(required) The path where the file should be saved, including filename and extension.",
-			            "type": "string"
-			        }
-			    },
-			    "required": ["content", "file_path"],
-			    "additionalProperties": false
-			}
-			""";
+    private static final String PARAMETERS = """
+            {
+                "type": "object",
+                "properties": {
+                    "file_type": {
+                        "type": "string",
+                        "description": "（必填）文件类型，例如 pdf、docx、xlsx、csv 等"
+                    },
+                    "file_path": {
+                        "type": "string",
+                        "description": "（必填）获取用户请求传入的文件绝对路径"
+                    }
+                },
+                "required": ["file_type","file_path"]
+            }
+            """;
 
-	private static final String name = "file_saver";
+    private static final String name = "doc_loader";
 
-	private static final String description = """
-			Save content to a local file at a specified path.
-			Use this tool when you need to save text, code, or generated content to a file on the local filesystem.
-			The tool accepts content and a file path, and saves the content to that location.""";
+    private static final String description = """
+            读取指定路径的本地文件内容。
+            用户提出和文件内容相关的查询需求时，调用此工具。
+            工具接收文件路径参数，读取并返回文件对应的内容数据。
+            """;
 
-	public static OpenAiApi.FunctionTool getToolDefinition() {
-		OpenAiApi.FunctionTool.Function function = new OpenAiApi.FunctionTool.Function(description, name, PARAMETERS);
-		OpenAiApi.FunctionTool functionTool = new OpenAiApi.FunctionTool(function);
-		return functionTool;
-	}
+    public static OpenAiApi.FunctionTool getToolDefinition() {
+        OpenAiApi.FunctionTool.Function function = new OpenAiApi.FunctionTool.Function(description, name, PARAMETERS);
+        OpenAiApi.FunctionTool functionTool = new OpenAiApi.FunctionTool(function);
+        return functionTool;
+    }
 
-	public static FunctionToolCallback getFunctionToolCallback() {
-		return FunctionToolCallback.builder(name, new FileSaver())
-			.description(description)
-			.inputSchema(PARAMETERS)
-			.inputType(String.class)
-			.build();
-	}
+    public static FunctionToolCallback getFunctionToolCallback() {
+        return FunctionToolCallback.builder(name, new FileSaver())
+                .description(description)
+                .inputSchema(PARAMETERS)
+                .inputType(String.class)
+                .build();
+    }
 
-	public ToolExecuteResult run(String toolInput) {
-		log.info("FileSaver toolInput:{}", toolInput);
-		try {
-			Map<String, Object> toolInputMap = JSON.parseObject(toolInput, new TypeReference<Map<String, Object>>() {
-			});
-			String content = (String) toolInputMap.get("content");
-			String filePath = (String) toolInputMap.get("file_path");
-			File file = new File(filePath);
-			File directory = file.getParentFile();
-			if (directory != null && !directory.exists()) {
-				directory.mkdirs();
-			}
+    public ToolExecuteResult run(String toolInput) {
+        log.info("FileSaver toolInput:{}", toolInput);
+        try {
+            Map<String, Object> toolInputMap = JSON.parseObject(toolInput, new TypeReference<Map<String, Object>>() {
+            });
+            String content = (String) toolInputMap.get("content");
+            String filePath = (String) toolInputMap.get("file_path");
+            File file = new File(filePath);
+            File directory = file.getParentFile();
+            if (directory != null && !directory.exists()) {
+                directory.mkdirs();
+            }
 
-			try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-				writer.write(content);
-			}
-			catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+                writer.write(content);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-			return new ToolExecuteResult("Content successfully saved to " + filePath);
-		}
-		catch (Throwable e) {
-			return new ToolExecuteResult("Error saving file: " + e.getMessage());
-		}
-	}
+            return new ToolExecuteResult("Content successfully saved to " + filePath);
+        } catch (Throwable e) {
+            return new ToolExecuteResult("Error saving file: " + e.getMessage());
+        }
+    }
 
-	@Override
-	public ToolExecuteResult apply(@ToolParam(description = PARAMETERS) String s) {
-		return run(s);
-	}
+    @Override
+    public ToolExecuteResult apply(@ToolParam(description = PARAMETERS) String s) {
+        return run(s);
+    }
 
 }

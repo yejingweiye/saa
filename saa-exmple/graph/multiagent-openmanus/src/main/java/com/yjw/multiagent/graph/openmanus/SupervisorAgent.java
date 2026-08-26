@@ -5,6 +5,8 @@ import com.alibaba.cloud.ai.graph.action.NodeAction;
 import com.alibaba.fastjson.JSON;
 import com.yjw.multiagent.graph.openmanus.tool.Plan;
 import com.yjw.multiagent.graph.openmanus.tool.PlanningTool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Optional;
@@ -15,6 +17,7 @@ import java.util.Optional;
  */
 public class SupervisorAgent implements NodeAction {
 
+    private static final Logger log = LoggerFactory.getLogger(SupervisorAgent.class);
     private final PlanningTool planningTool;
 
     /**
@@ -85,6 +88,8 @@ public class SupervisorAgent implements NodeAction {
     public String think(OverAllState state) {
 
         String nextPrompt = (String) state.value("step_prompt").orElseThrow();
+
+        log.info("下一步的提示词: {}", nextPrompt);
 
         if (nextPrompt.equalsIgnoreCase("Plan completed.")) {
             state.updateState(Map.of("final_output", state.value("step_output").orElseThrow()));
