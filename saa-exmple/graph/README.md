@@ -29,3 +29,6 @@ InterruptionMetadata 模式 可根据状态动态中断
 ## parallel-node
 并行节点
 
+## parallel-stream-node
+注重流式处理
+
