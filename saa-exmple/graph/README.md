@@ -38,5 +38,8 @@ InterruptionMetadata 模式 可根据状态动态中断
 ## workflow-writing-assistant
 写作助手
 
+## usecase-field-classifier
+字段敏感词分类
+
 
 

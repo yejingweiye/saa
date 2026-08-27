@@ -38,6 +38,7 @@
         <module>parallel-stream-node</module>
         <module>stream-node</module>
         <module>workflow-writing-assistant</module>
+        <module>usecase-field-classifier</module>
     </modules>
 
     <build>
