@@ -39,7 +39,7 @@ public class GraphHumanController {
         this.compiledGraph = stateGraph.compile(
                 CompileConfig.builder()
                         .saverConfig(saverConfig)
-                        .interruptBefore("human_feedback")
+                        .interruptBefore("human_feedback") // 声明中断节点
                         .build()
         );
     }
