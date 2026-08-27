@@ -1,0 +1,15 @@
+
+package com.yjw.parallel;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
+
+@SpringBootApplication
+public class ParallelNodeApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(ParallelNodeApplication.class, args);
+    }
+}
