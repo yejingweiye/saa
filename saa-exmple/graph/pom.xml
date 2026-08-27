@@ -36,6 +36,7 @@
         <module>dynamic-interrupt-human-node</module>
         <module>parallel-node</module>
         <module>parallel-stream-node</module>
+        <module>stream-node</module>
     </modules>
 
     <build>
