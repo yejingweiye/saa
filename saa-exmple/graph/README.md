@@ -16,3 +16,13 @@ start->intent->chat/callSubGraph->mainReply->end
 
 ## product-analysis-graph 产品分析图
 输入产品信息->并行产生营销广告和挑出产品规格->合并json输出
+
+## multiagent-openmanus
+多agent:规划总纲agent->协调监督每条计划进度agent->执行每条计划agent
+
+## human-node
+interruptBefore 模式 已知中断点编译时确定
+
+## dynamic-interrupt-human-node
+InterruptionMetadata 模式 可根据状态动态中断
+

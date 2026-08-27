@@ -41,8 +41,6 @@
     </properties>
 
     <modules>
-
-        <module>saa-graph</module>
         <module>saa-human-graph</module>
         <module>scab</module>
         <module>saa-exmple</module>

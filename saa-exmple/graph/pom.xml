@@ -33,6 +33,7 @@
         <module>product-analysis-graph</module>
         <module>multiagent-openmanus</module>
         <module>human-node</module>
+        <module>dynamic-interrupt-human-node</module>
     </modules>
 
     <build>
