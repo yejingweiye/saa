@@ -7,10 +7,10 @@ server:
       force: true
 spring:
   application:
-    name: graph
+    name: human-node
   ai:
     dashscope:
       api-key: ${AI_DASHSCOPE_API_KEY}
       chat:
         options:
-          model: qwen-max  # qwen-plus qwen-max
+          model: qwen-plus-latest

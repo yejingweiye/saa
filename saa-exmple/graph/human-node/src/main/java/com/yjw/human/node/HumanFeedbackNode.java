@@ -1,4 +1,5 @@
-package com.yjw.node;
+
+package com.yjw.human.node;
 
 import com.alibaba.cloud.ai.graph.OverAllState;
 import com.alibaba.cloud.ai.graph.StateGraph;
@@ -9,18 +10,21 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
 public class HumanFeedbackNode implements NodeAction {
 
     private static final Logger logger = LoggerFactory.getLogger(HumanFeedbackNode.class);
-    @Override
-    public Map<String, Object> apply(OverAllState state) throws Exception {
-        logger.info("HumanFeedback node is running");
-        HashMap<String,Object> resultMap = new HashMap<>();
-        String nextStep = StateGraph.END;
 
-        Map<String, Object> feedBackDataMap = state.data();
-        boolean feedBack = (boolean) feedBackDataMap.getOrDefault("feed_back", true);
-        if(feedBack){
+    @Override
+    public Map<String, Object> apply(OverAllState state) {
+        logger.info("human_feedback node is running.");
+        HashMap<String, Object> resultMap = new HashMap<>();
+        String nextStep = StateGraph.END; // 默认是结束
+
+        Map<String, Object> feedBackData = state.data();
+        boolean feedback = (boolean) feedBackData.getOrDefault("feed_back", true);
+        if (feedback) {
             nextStep = "translate";
         }
 

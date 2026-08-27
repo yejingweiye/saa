@@ -32,6 +32,7 @@
         <module>workflow-review-classifier</module>
         <module>product-analysis-graph</module>
         <module>multiagent-openmanus</module>
+        <module>human-node</module>
     </modules>
 
     <build>

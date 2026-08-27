@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.yjw</groupId>
-        <artifactId>saa</artifactId>
+        <artifactId>graph</artifactId>
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.yjw</groupId>
-    <artifactId>saa-graph</artifactId>
+    <artifactId>human-node</artifactId>
 
     <dependencies>
 

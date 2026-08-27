@@ -1,12 +1,14 @@
-package com.yjw;
 
+package com.yjw.human;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 @SpringBootApplication
-public class GraphqlApplication {
+public class HumanNodeApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(GraphqlApplication.class, args);
+        SpringApplication.run(HumanNodeApplication.class, args);
     }
 }

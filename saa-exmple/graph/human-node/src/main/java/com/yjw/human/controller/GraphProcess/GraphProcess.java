@@ -1,17 +1,16 @@
-package com.yjw.controller.graphprocess;
+
+package com.yjw.human.controller.GraphProcess;
 
 import com.alibaba.cloud.ai.graph.CompiledGraph;
 import com.alibaba.cloud.ai.graph.NodeOutput;
 import com.alibaba.cloud.ai.graph.streaming.StreamingOutput;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.commons.collections4.Factory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.codec.ServerSentEvent;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
-import java.util.Stack;
 
 public class GraphProcess {
 
@@ -25,16 +24,16 @@ public class GraphProcess {
 
     public void processStream(Flux<NodeOutput> nodeOutputFlux, Sinks.Many<ServerSentEvent<ChatMessage>> sink) {
         nodeOutputFlux
-                .doOnNext(output->{
-                    logger.info("output = {}",output);
+                .doOnNext(output -> {
+                    logger.info("output = {}", output);
                     String nodeName = output.node();
                     ChatMessage chatMessage = null;
-                    if(output instanceof StreamingOutput<?> streamingOutput){
+                    if (output instanceof StreamingOutput<?> streamingOutput) {
                         String chunk = streamingOutput.chunk();
                         if (chunk != null && !chunk.isEmpty()) {
                             chatMessage = new ChatMessage(nodeName, chunk);
                         }
-                    }else {
+                    } else {
                         chatMessage = new ChatMessage(nodeName, output.state().data());
                     }
                     sink.tryEmitNext(ServerSentEvent.builder(chatMessage).build());
@@ -49,7 +48,6 @@ public class GraphProcess {
                 })
                 .subscribe();
     }
-
 
     public record ChatMessage(@JsonProperty("node_name") String nodeName, @JsonProperty("type") Object data) {
     }
