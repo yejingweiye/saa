@@ -37,6 +37,7 @@
         <module>parallel-node</module>
         <module>parallel-stream-node</module>
         <module>stream-node</module>
+        <module>workflow-writing-assistant</module>
     </modules>
 
     <build>

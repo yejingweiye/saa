@@ -35,5 +35,8 @@ InterruptionMetadata 模式 可根据状态动态中断
 ## stream-node
 注重流式处理节点
 
+## workflow-writing-assistant
+写作助手
+
 
 
