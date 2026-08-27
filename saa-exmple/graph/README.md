@@ -26,3 +26,6 @@ interruptBefore 模式 已知中断点编译时确定
 ## dynamic-interrupt-human-node
 InterruptionMetadata 模式 可根据状态动态中断
 
+## parallel-node
+并行节点
+
