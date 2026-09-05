@@ -12,11 +12,14 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+/**
+ *  题目
+ */
 public class QuestionDirection {
 
-    private String topic;
-    private String type;        // basic/experience/design
-    private String difficulty;  // easy/medium/hard
+    private String topic;  // 考点
+    private String type;        //类型 basic/experience/design
+    private String difficulty;  //难度 easy/medium/hard
 
     @JsonProperty("search_query")
     private String searchQuery;

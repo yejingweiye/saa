@@ -7,8 +7,13 @@ import com.alibaba.cloud.ai.graph.StateGraph;
 import com.alibaba.cloud.ai.graph.state.strategy.ReplaceStrategy;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.mirror.agent.agent.JDAnalyzer;
-import com.mirror.agent.agent.ResumeMatcher;
+import com.mirror.agent.agent.*;
+import com.mirror.agent.memory.LongTermMemory;
+import com.mirror.agent.memory.MySQLStore;
+import com.mirror.agent.memory.ShortTermMemory;
+import com.mirror.agent.rag.BM25Manager;
+import com.mirror.agent.rag.MilvusStore;
+import com.mirror.agent.rag.Reranker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -46,12 +51,12 @@ public class Orchestrator {
     private final Interviewer interviewer; // 面试
     private final Evaluator evaluator; // 评价
     private final ReviewPlanner reviewPlanner; // 复盘规划
-    private final ShortTermMemory shortTermMemory; // 短期记忆
-    private final LongTermMemory longTermMemory; // 长期记忆
+    private final ShortTermMemory shortTermMem; // 短期记忆
+    private final LongTermMemory longTermMem; // 长期记忆
     private final MilvusStore milvusStore; // Milvus 向量数据库
     private final BM25Manager bm25Manager; // BM25 文本检索
     private final Reranker reranker; // 重排序器
-    private final MySQLStore mySQLStore; // MySQL 存储
+    private final MySQLStore mysqlStore; // MySQL 存储
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule()); //  不加 `new JavaTimeModule()`，LocalDateTime直接抛出异常
 
     public Orchestrator(JDAnalyzer jdAnalyzer, ResumeMatcher resumeMatcher,
