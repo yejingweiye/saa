@@ -131,4 +131,25 @@ public class MySQLStore {
     }
 
 
+    @Transactional
+    public void saveInterviewRecord(String userId, UserProfile.InterviewRecord record,
+                                    String reportJson, String reviewPlanJson) {
+        try {
+            entityManager.createNativeQuery("""
+                INSERT INTO interview_records (user_id, session_id, position, overall_score, report_json, review_plan_json)
+                VALUES (:userId, :sessionId, :position, :score, :report, :reviewPlan)
+            """)
+                    .setParameter("userId", userId)
+                    .setParameter("sessionId", record.getSessionId())
+                    .setParameter("position", record.getPosition())
+                    .setParameter("score", record.getOverallScore())
+                    .setParameter("report", reportJson)
+                    .setParameter("reviewPlan", reviewPlanJson)
+                    .executeUpdate();
+        } catch (Exception e) {
+            log.error("[MySQLStore] 保存面试记录失败: {}", e.getMessage());
+        }
+    }
+
+
 }

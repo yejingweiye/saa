@@ -207,6 +207,7 @@ public class QuestionPlanner {
      * - 否则保持当前难度
      */
     public String adjustDifficulty(InterviewState state) {
+        //连续答对>=2，升难度
         if (state.getConsecutiveRight() >= 2) {
             return switch (state.getCurrentDifficulty()) {
                 case "easy" -> "medium";
@@ -215,6 +216,7 @@ public class QuestionPlanner {
             };
         }
 
+        //连续答错>=2，降难度
         if (state.getConsecutiveWrong() >= 2) {
             return switch (state.getCurrentDifficulty()) {
                 case "hard" -> "medium";
@@ -223,6 +225,7 @@ public class QuestionPlanner {
             };
         }
 
+        //不满足条件，维持原来难度
         return state.getCurrentDifficulty();
     }
 

@@ -143,4 +143,50 @@ public class ReviewPlanner {
         }
     }
 
+    /**
+     * 格式化复习计划为 Markdown（与 Go 版本 FormatReviewPlan 对齐）
+     */
+    public static String formatReviewPlan(ReviewPlan plan) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("# 个性化复习计划\n\n");
+
+        if (plan.getWeakAreas() != null && !plan.getWeakAreas().isEmpty()) {
+            sb.append("## 薄弱领域\n\n");
+            sb.append("| 领域 | 得分 | 优先级 |\n|------|------|--------|\n");
+            plan.getWeakAreas().forEach(wa ->
+                    sb.append(String.format("| %s | %.0f | %s |\n", wa.getTopic(), wa.getScore(), wa.getPriority())));
+            sb.append("\n");
+        }
+
+        if (plan.getStudyPlan() != null && !plan.getStudyPlan().isEmpty()) {
+            sb.append("## 学习计划\n\n");
+            for (ReviewPlan.StudyItem item : plan.getStudyPlan()) {
+                sb.append(String.format("### %s\n\n", item.getTopic()));
+                sb.append(String.format("**目标**：%s\n\n", item.getObjective()));
+                sb.append(String.format("**预估时间**：%s\n\n", item.getTimeEstimate()));
+                if (item.getActions() != null) {
+                    sb.append("**行动步骤**：\n");
+                    item.getActions().forEach(a -> sb.append("- ").append(a).append("\n"));
+                    sb.append("\n");
+                }
+            }
+        }
+
+        if (plan.getResources() != null && !plan.getResources().isEmpty()) {
+            sb.append("## 推荐资源\n\n");
+            for (ReviewPlan.Resource res : plan.getResources()) {
+                sb.append(String.format("- **%s**（%s）", res.getTitle(), res.getType()));
+                if (res.getUrl() != null && !res.getUrl().isEmpty()) {
+                    sb.append(String.format("：[链接](%s)", res.getUrl()));
+                }
+                if (res.getDesc() != null && !res.getDesc().isEmpty()) {
+                    sb.append(" — ").append(res.getDesc());
+                }
+                sb.append("\n");
+            }
+        }
+
+        return sb.toString();
+    }
+
 }
