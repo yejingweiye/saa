@@ -5,15 +5,19 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mirror.agent.agent.ChatAgent;
 import com.mirror.agent.agent.IntentRouter;
 import com.mirror.agent.auth.JwtService;
+import com.mirror.agent.graph.InterviewCallbacks;
 import com.mirror.agent.graph.Orchestrator;
+import com.mirror.agent.graph.UserQuitException;
 import com.mirror.agent.loader.DocumentLoader;
 import com.mirror.agent.loader.QuestionParser;
 import com.mirror.agent.loader.WebLoader;
 import com.mirror.agent.memory.RedisStore;
+import com.mirror.agent.model.AnswerScore;
 import com.mirror.agent.model.ClientMsg;
 import com.mirror.agent.model.ServerMsg;
 import com.mirror.agent.rag.BM25Manager;
 import com.mirror.agent.rag.MilvusStore;
+import com.mirror.agent.rag.RagDocument;
 import com.mirror.agent.skill.*;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +31,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -68,7 +74,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
      * 若再用 commonPool 跑 runInterview 并阻塞等待节点（interview 节点还会阻塞等用户回答），
      * 会与节点执行互相抢占 commonPool 线程，导致线程饥饿 / 死锁。故面试走独立可扩展线程池。
      */
-    private final ExecutorService executorService = Executors.newCachedThreadPool(r -> {
+    private final ExecutorService asyncExecutor = Executors.newCachedThreadPool(r -> {
         Thread t = new Thread(r, "interview-async-worker");
         t.setDaemon(true);
         return t;
@@ -154,8 +160,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
             ClientMsg msg = objectMapper.readValue(message.getPayload(), ClientMsg.class);
 
             switch (msg.getType() != null ? msg.getType() : "") {
-                case "chat" ->handleChat(ws, msg);
-                case "start_interview"->  handleStartInterview(ws, msg);
+                case "chat" -> handleChat(ws, msg);
+                case "start_interview" -> handleStartInterview(ws, msg);
                 case "answer" -> handleAnswer(ws, msg);
                 case "upload_questions" -> handleUploadQuestions(ws, msg);
                 case "quit_interview" -> handleQuitInterview(ws, msg);
@@ -236,8 +242,226 @@ public class WebSocketHandler extends TextWebSocketHandler {
     }
 
     /**
-     * 解析输入：处理文件上传、URL 和纯文本
+     * 开始面试
      */
+    private void handleStartInterview(WSSession ws, ClientMsg msg) {
+        if (ws.interviewRunning) {
+            sendServerMsg(ws.conn, ServerMsg.builder().type("error").message("面试已在进行中").build());
+            return;
+        }
+
+        String jdText = msg.getJd() != null ? msg.getJd() : "";
+        String resumeText = msg.getResume() != null ? msg.getResume() : "";
+
+        if (jdText.isEmpty() || resumeText.isEmpty()) {
+            sendServerMsg(ws.conn, ServerMsg.builder().type("error").message("JD 和简历不能为空").build());
+            return;
+        }
+
+        // 解析 JD / 简历输入：支持 [FILE:] 文件、URL 抓取、纯文本（与 Go resolveInput 一致）
+        jdText = resolveInput(jdText);
+        resumeText = resolveInput(resumeText);
+
+        ws.interviewRunning = true;
+        ws.answerCh = new LinkedBlockingQueue<>();
+
+        String finalJdText = jdText;
+        String finalResumeText = resumeText;
+
+        asyncExecutor.execute(() -> {
+            try {
+                InterviewCallbacks callbacks = new InterviewCallbacks() {
+
+                    /** 阶段变化回调 */
+                    @Override
+                    public void onStageChange(String stage, String message) {
+                        sendServerMsg(ws.conn, ServerMsg.builder()
+                                .type("stage_change").stage(stage).message(message).build());
+                    }
+
+                    /** 题目回调 */
+                    @Override
+                    public void onQuestion(int questionNum, String content) {
+                        sendServerMsg(ws.conn, ServerMsg.builder()
+                                .type("question").questionNum(questionNum).content(content).build());
+                    }
+
+                    /** 评分回调 */
+                    @Override
+                    public void onScore(AnswerScore score) {
+                        sendServerMsg(ws.conn, ServerMsg.builder()
+                                .type("score")
+                                .score(score.getScore())
+                                .feedback(score.getFeedback())
+                                .keyPointsHit(score.getKeyPointsHit())
+                                .keyPointsMissed(score.getKeyPointsMissed())
+                                .build());
+                    }
+
+                    /** 报告回调 */
+                    @Override
+                    public void onReport(String report) {
+                        sendServerMsg(ws.conn, ServerMsg.builder()
+                                .type("report").content(report).build());
+                    }
+
+                    /** 复习计划回调 */
+                    @Override
+                    public void onReviewPlan(String plan) {
+                        sendServerMsg(ws.conn, ServerMsg.builder()
+                                .type("review_plan").content(plan).build());
+                    }
+
+                    /** 获取用户回答（阻塞等待） */
+                    @Override
+                    public String getUserAnswer() throws InterruptedException, UserQuitException {
+                        String answer = ws.answerCh.take(); // 阻塞获取队列头部元素
+                        if ("/quit".equals(answer) || "/exit".equals(answer)
+                                || "退出".equals(answer) || "结束面试".equals(answer)) {
+                            throw new UserQuitException();
+                        }
+                        return answer;
+                    }
+                };
+
+                // 跑工作流并把回调传进去
+                orchestrator.runInterview(finalJdText, finalResumeText, ws.userID, callbacks);
+
+            } catch (Exception e) {
+                log.error("[WS] 面试流程异常: {}", e.getMessage(), e);
+                sendServerMsg(ws.conn, ServerMsg.builder()
+                        .type("error").message("面试流程异常: " + e.getMessage()).build());
+            } finally {
+                // 与 Go 版本一致：面试流程结束后（无论正常完成、用户终止或异常）都通知前端
+                sendServerMsg(ws.conn, ServerMsg.builder().type("interview_complete").build());
+                ws.interviewRunning = false;
+            }
+        });
+    }
+
+    /**
+     * 用户回答
+     */
+    private void handleAnswer(WSSession ws, ClientMsg msg) {
+        if (!ws.interviewRunning) {
+            sendServerMsg(ws.conn, ServerMsg.builder().type("error").message("当前没有进行中的面试").build());
+            return;
+        }
+
+        ws.answerCh.offer(msg.getContent() != null ? msg.getContent() : ""); // 尝试把元素放入队列，不会阻塞
+
+    }
+
+    /**
+     * 上传题库
+     */
+    private void handleUploadQuestions(WSSession ws, ClientMsg msg) {
+        String filename = msg.getFilename();
+        String base64Data = msg.getData();
+
+        if (filename == null || filename.isEmpty() || base64Data == null || base64Data.isEmpty()) {
+            sendServerMsg(ws.conn, ServerMsg.builder().type("error").message("文件名和数据不能为空").build());
+            return;
+        }
+
+        asyncExecutor.execute(() -> {
+            try {
+                // SHA256 去重检查
+                String hash = sha256(base64Data);
+                String existingHash = redisStore.getFileHash(ws.userID, filename);
+
+                if (hash.equals(existingHash)) {
+                    sendServerMsg(ws.conn, ServerMsg.builder()
+                            .type("upload_result")
+                            .content("✅ 该题库之前已成功导入过（文件内容相同），本次自动跳过、无需重复上传，原有题目继续可用。")
+                            .build());
+                    return;
+                }
+
+                sendServerMsg(ws.conn, ServerMsg.builder()
+                        .type("stage_change").stage("upload_parsing").message("正在解析文件内容...").build());
+
+                // 解析文件
+                String text = documentLoader.parseBase64File(filename, base64Data);
+
+                sendServerMsg(ws.conn, ServerMsg.builder()
+                        .type("stage_change").stage("upload_llm").message("正在用 LLM 提取题目...").build());
+
+                // LLM 解析题目
+                QuestionParser.ParseResult result = questionParser.parseQuestionBank(text); // questionParser 节点解析题目
+
+                if (result.getQuestions().isEmpty()) {
+                    sendServerMsg(ws.conn, ServerMsg.builder()
+                            .type("upload_result")
+                            .content(String.format("⚠️ 未能从该文件解析出有效题目（共识别 %d 道，均因内容过短等原因未通过校验）。请确认上传的是面试题库内容。", result.getTotal()))
+                            .build());
+                    return;
+                }
+
+                sendServerMsg(ws.conn, ServerMsg.builder()
+                        .type("stage_change").stage("upload_indexing")
+                        .message(String.format("正在写入知识库（%d 道题目）...", result.getQuestions().size()))
+                        .build());
+
+                // 0.先删除旧文件的题目
+                milvusStore.deleteBySourceFile(ws.userID, filename);
+
+                // 1.写入 Milvus
+                List<MilvusStore.ParsedQuestionInput> milvusQuestions = result.getQuestions().stream()
+                        .map(q -> MilvusStore.ParsedQuestionInput.builder()
+                                .id(q.getId())
+                                .content(q.getContent())
+                                .reference(q.getReference())
+                                .type(q.getType())
+                                .difficulty(q.getDifficulty())
+                                .skills(q.getSkills())
+                                .build())
+                        .toList();
+                milvusStore.loadParsedQuestions(ws.userID, filename, milvusQuestions);
+
+                // 2.写入 BM25
+                List<RagDocument> bm25Docs = result.getQuestions().stream()
+                        .map(q -> RagDocument.builder()
+                                .id(q.getId())
+                                .content(q.getContent() + "\n参考答案：" + q.getReference())
+                                .build())
+                        .toList();
+                bm25Manager.appendDocuments(ws.userID, bm25Docs);
+
+                // 保存文件 hash
+                redisStore.saveFileHash(ws.userID, filename, hash);
+
+                String resultMsg = String.format("✅ 题库导入成功！成功录入 %d 道题。", result.getSuccess());
+                if (result.getFailed() > 0) {
+                    resultMsg += String.format("\n（另有 %d 道因题目内容过短等原因被自动忽略，不影响其余题目的正常使用）", result.getFailed());
+                }
+
+                sendServerMsg(ws.conn, ServerMsg.builder()
+                        .type("upload_result").content(resultMsg)
+                        .message(formatParseErrors(result.getErrors())).build());
+
+
+            } catch (Exception e) { log.error("[WS] 题库上传失败: {}", e.getMessage(), e);
+                sendServerMsg(ws.conn, ServerMsg.builder()
+                        .type("error").message("题库上传失败: " + e.getMessage()).build());
+            }
+        });
+    }
+
+    /**
+     * 用户主动终止面试
+     */
+    private void handleQuitInterview(WSSession ws, ClientMsg msg) {
+        if (ws.interviewRunning) {
+            ws.answerCh.offer("/quit");
+        } else {
+            sendServerMsg(ws.conn, ServerMsg.builder().type("error").message("当前没有进行中的面试").build());
+        }
+    }
+
+        /**
+         * 解析输入：处理文件上传、URL 和纯文本
+         */
     private String resolveInput(String content) {
         if (content == null) content = "";
 
@@ -277,6 +501,32 @@ public class WebSocketHandler extends TextWebSocketHandler {
             }
         } catch (Exception e) {
             log.error("[WS] 发送消息失败: {}", e.getMessage());
+        }
+    }
+
+    /** 格式化题库解析的校验失败详情（与 Go formatParseErrors 一致），无错误返回 null（NON_NULL 不序列化） */
+    private String formatParseErrors(List<QuestionParser.ParseError> errs) {
+        if (errs == null || errs.isEmpty()) return null;
+        StringBuilder sb = new StringBuilder();
+        for (QuestionParser.ParseError e : errs) {
+            sb.append(String.format("#%d: %s%n", e.getIndex(), e.getReason()));
+        }
+        return sb.toString();
+    }
+
+    private String sha256(String input) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (Exception e) {
+            return input.hashCode() + "";
         }
     }
 
