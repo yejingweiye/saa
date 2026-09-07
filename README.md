@@ -1,5 +1,5 @@
 # saa AI应用开发系统
-## 1. tj-aigc 
+## 1. 实战tj-aigc 
 基于springAI的【智能推荐客服系统】
 
 ### 模块功能总览
@@ -53,7 +53,45 @@ Spring Boot 3.3 / Spring Cloud 2023 / Spring AI 1.0，Java 17，Nacos + Sentinel
 
 ![image-presaled](./docs/presaled.png)
 
-## 2.saa-exmple 
+## 2. 实战MirrorAgent
+基于 **Java 17 + Spring Boot 3.4 + Spring AI Alibaba** 的全栈 AI 模拟面试系统（前后端分离，位于 `saa-exmple/MirrorAgent`）。用户上传简历、输入目标岗位 JD，系统自动完成 JD 分析、简历匹配、智能出题、多轮技术面试与实时评分，面试结束后生成评估报告与个性化复习计划。工程内独立成完整项目，可单独运行。
+
+### 模块功能总览
+saa-exmple 下独立的前后端分离工程（Java + Web 两个子模块），底层大模型统一使用通义千问 DashScope，覆盖多 Agent 协作、RAG 多路召回、动态难度调节、Agent 记忆系统等大模型应用核心能力。
+
+| 子模块 | 说明 |
+|---|---|
+| `MirrorAgent-java` | Spring Boot 后端（:9090，WebSocket 实时通信），含 Agent 编排 / RAG / 记忆 / Skill / 工具实现 |
+| `MirrorAgent-web` | React 19 + Vite + TypeScript 前端（:5173），完整面试交互界面 |
+
+#### 核心能力
+- **多 Agent 协作**：7 个专职 Agent（聊天 + JD 分析 / 简历匹配 / 出题规划 / 面试官 / 评估 / 复习规划）经 Spring AI Alibaba StateGraph 编排为有向图，流程确定、各 Agent 可独立调优
+- **RAG 多路召回**：Milvus 向量（text-embedding-v3，1024 维，COSINE）+ 内存 BM25 关键词双路并行检索，去重合并后交 LLM 全量重排；另实现 RRF(k=60) 融合器与 Recall@K / MRR 离线评估
+- **动态难度调节**：出题阶段预生成按难度分档的候选题池，面试按 basic → experience → design 三阶段自适应取题，连续答对升一档、连续答错降一档
+- **Agent 记忆系统**：短期对话记忆（20 条滑窗）+ 长期用户画像与薄弱点追踪（得分 <60 记录 / ≥80 移除 / 30 天淘汰），Redis 缓存热数据 + MySQL 持久化，Cache-Aside 管理
+- **Skill 技能系统**：4 个内置 Skill（快速测验 / 概念教学 / 项目亮点 / 技术对比），经 SkillRegistry 注册中心按优先级匹配，可插拔扩展
+- **工具集成**：GitHub 项目搜索（复习规划 Agent 的 ReactAgent 自主调用，推荐学习资源）+ 网页抓取工具（JD 链接基础抓取）
+- **WebSocket 实时通信**：面试编排在独立线程池中执行，阻塞队列 + 回调实现「人在环」逐题问答，阶段进展实时推送前端
+
+#### 技术栈
+Java 17 / Spring Boot 3.4.1 / Spring AI Alibaba 1.1.2.0，通义千问 DashScope（qwen-plus，可换 qwen-max）、text-embedding-v3，Milvus 2.4、Redis 7、MySQL 8、Spring Security + JWT；前端 React 19 + Vite + TS + Tailwind 4 + Zustand；Docker Compose 一键启动基础设施（Milvus + Redis + MySQL），Makefile 封装常用命令
+
+### 快速开始
+```bash
+cd saa-exmple/MirrorAgent/MirrorAgent-java
+cp .env.example .env        # 只需填入 DASHSCOPE_API_KEY
+make infra-up               # 启动 Milvus + Redis + MySQL（共 5 个容器）
+make run                    # 启动后端 :9090
+cd ../MirrorAgent-web
+npm install && npm run dev  # 启动前端 :5173
+```
+
+### 架构图
+![image-system-architecture](./saa-exmple/MirrorAgent/docs/assets/system-architecture.svg)
+
+![image-interview-flow](./saa-exmple/MirrorAgent/docs/assets/interview-flow.svg)
+
+## 3. saa-exmple 
 基于 spring AI Alibaba 实现的各种exmple
 
 ### 模块功能总览
@@ -140,7 +178,7 @@ saa-exmple 是基于 **Spring AI Alibaba + Spring Boot 3** 的多模块示例集
 ![image-zipkin-1](./docs/zipkin.png)
 ![image-langfuse](./docs/langfuse.png)
 
-## 3.scab
+## 4. scab
 spring cloud Alibaba 基础复用框架
 
 ### 模块功能总览
