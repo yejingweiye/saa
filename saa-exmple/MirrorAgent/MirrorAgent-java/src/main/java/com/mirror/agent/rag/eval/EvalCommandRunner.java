@@ -42,7 +42,21 @@ import java.util.stream.Stream;
  * </ul>
  *
  * 非 {@code eval} 启动时该 Runner 直接返回，不影响 Web 服务。
+ *
+ * 1. eval --prepare
+ *     ↓
+ * 读取本地md面试题库 → 解析题目 → 写入Milvus向量库、准备BM25数据 → 生成manifest.json（所有题目的清单）
+ *     ↓
+ * 2. eval --gen-dataset
+ *     ↓
+ * 读取manifest.json，自动造出一批测试问题dataset.json，每个测试问题标记「应该检索出来哪些正确文档」
+ *     ↓
+ * 3. eval --note baseline
+ *     ↓
+ * 拿测试数据集一条条模拟用户查询，调用RAG检索，对比检索结果和标准答案，计算分数，输出Markdown/JSON评估报告
  */
+
+
 @Slf4j
 @Component
 @Order(1)
